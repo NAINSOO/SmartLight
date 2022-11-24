@@ -1,0 +1,1220 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V9.30.1.335/W64 for ARM         23/Nov/2022  21:00:39
+# Copyright 1999-2022 IAR Systems AB.
+#
+#    Cpu mode          =  thumb
+#    Endian            =  little
+#    Source file       =
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Libraries\ws2812\src\ws2812b.c
+#    Command line      =
+#        -f
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\Obj\libraries\ws2812\src\ws2812b.o.rsp
+#        (C:\Users\NAINSOO\Desktop\programming\project_test\Libraries\ws2812\src\ws2812b.c
+#        -D USE_STDPERIPH_DRIVER -D STM32F10X_CL -lC
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\List\libraries\ws2812\src
+#        -o
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\Obj\libraries\ws2812\src
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program Files\IAR
+#        Systems\Embedded Workbench 9.1\arm\inc\c\DLib_Config_Normal.h" -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\CMSIS\DeviceSupport\
+#        -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\CMSIS\DeviceSupport\Startup\
+#        -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\inc\
+#        -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\src\
+#        -I C:\Users\NAINSOO\Desktop\programming\project_test\user\ -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\LCD\ -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\user\inc\ -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\ws2812\inc\
+#        -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\ws2812\src\
+#        -Ol -I "C:\Program Files\IAR Systems\Embedded Workbench
+#        9.1\arm\CMSIS\Core\Include\\") --dependencies=n
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\Obj\libraries\ws2812\src\ws2812b.o.d
+#    Locale            =  C
+#    List file         =
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\List\libraries\ws2812\src\ws2812b.lst
+#    Object file       =
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\Obj\libraries\ws2812\src\ws2812b.o
+#    Runtime model:       
+#      __CPP_Runtime   =  1
+#      __SystemLibrary =  DLib
+#      __dlib_version  =  6
+#      __size_limit    =  32768|ARM.EW.LINKER
+#
+###############################################################################
+
+C:\Users\NAINSOO\Desktop\programming\project_test\Libraries\ws2812\src\ws2812b.c
+      1          // The MIT License (MIT)
+      2          //
+      3          // Copyright (c) 2015 Aleksandr Aleshin <silencer@quadrius.net>
+      4          //
+      5          // Permission is hereby granted, free of charge, to any person obtaining a copy
+      6          // of this software and associated documentation files (the "Software"), to deal
+      7          // in the Software without restriction, including without limitation the rights
+      8          // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      9          // copies of the Software, and to permit persons to whom the Software is
+     10          // furnished to do so, subject to the following conditions:
+     11          //
+     12          // The above copyright notice and this permission notice shall be included in all
+     13          // copies or substantial portions of the Software.
+     14          //
+     15          // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+     16          // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+     17          // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+     18          // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+     19          // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+     20          // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+     21          // SOFTWARE.
+     22          
+     23          #include <stdint.h>
+     24          #include <string.h>
+     25          
+     26          #include "bitmap.h"
+     27          
+     28          #include "ws2812b.h"
+     29          #include "ws2812b_conf.h"
+     30          
+     31          //------------------------------------------------------------
+     32          // Internal
+     33          //------------------------------------------------------------
+     34          
+     35          #define MIN(a, b)   ({ typeof(a) a1 = a; typeof(b) b1 = b; a1 < b1 ? a1 : b1; })
+     36          
+     37          #if defined(__ICCARM__)
+     38          __packed struct PWM
+     39          #else
+     40          struct __attribute__((packed)) PWM
+     41          #endif
+     42          {
+     43              uint16_t g[8], r[8], b[8];
+     44          };
+     45          
+     46          typedef struct PWM PWM_t;
+     47          typedef void (SrcFilter_t)(void **, PWM_t **, unsigned *, unsigned);
+     48          
+     49          #ifdef WS2812B_USE_GAMMA_CORRECTION
+     50          #ifdef WS2812B_USE_PRECALCULATED_GAMMA_TABLE
+
+   \                                 In section .rodata, align 4
+     51          static const uint8_t LEDGammaTable[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
+   \                     LEDGammaTable:
+   \        0x0   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2
+
+   \              0x00 0x00    
+
+   \              0x00 0x00    
+
+   \              0x00 0x00    
+
+   \              0x00 0x00    
+
+   \              0x00 0x00    
+
+   \              0x01 0x01    
+
+   \              0x01 0x01    
+
+   \              0x01 0x01    
+
+   \              0x01 0x01    
+
+   \              0x02 0x02    
+
+   \              0x02
+   \       0x17   0x02 0x02          DC8 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8
+
+   \              0x02 0x03    
+
+   \              0x03 0x03    
+
+   \              0x03 0x04    
+
+   \              0x04 0x04    
+
+   \              0x04 0x05    
+
+   \              0x05 0x05    
+
+   \              0x05 0x06    
+
+   \              0x06 0x06    
+
+   \              0x07 0x07    
+
+   \              0x07 0x08    
+
+   \              0x08
+   \       0x2E   0x08 0x09          DC8 8, 9, 9, 9, 10, 10, 11, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16
+
+   \              0x09 0x09    
+
+   \              0x0A 0x0A    
+
+   \              0x0B 0x0B    
+
+   \              0x0B 0x0C    
+
+   \              0x0C 0x0D    
+
+   \              0x0D 0x0E    
+
+   \              0x0E 0x0F    
+
+   \              0x0F 0x10
+   \       0x40   0x10 0x11          DC8 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 23, 23, 24, 24, 25
+
+   \              0x11 0x12    
+
+   \              0x12 0x13    
+
+   \              0x13 0x14    
+
+   \              0x14 0x15    
+
+   \              0x15 0x16    
+
+   \              0x17 0x17    
+
+   \              0x18 0x18    
+
+   \              0x19
+   \       0x51   0x1A 0x1A          DC8 26, 26, 27, 28, 28, 29, 30, 30, 31, 32, 32, 33, 34, 35, 35, 36, 37
+
+   \              0x1B 0x1C    
+
+   \              0x1C 0x1D    
+
+   \              0x1E 0x1E    
+
+   \              0x1F 0x20    
+
+   \              0x20 0x21    
+
+   \              0x22 0x23    
+
+   \              0x23 0x24    
+
+   \              0x25
+   \       0x62   0x26 0x26          DC8 38, 38, 39, 40, 41, 42, 42, 43, 44, 45, 46, 47, 47, 48, 49, 50, 51
+
+   \              0x27 0x28    
+
+   \              0x29 0x2A    
+
+   \              0x2A 0x2B    
+
+   \              0x2C 0x2D    
+
+   \              0x2E 0x2F    
+
+   \              0x2F 0x30    
+
+   \              0x31 0x32    
+
+   \              0x33
+   \       0x73   0x34 0x35          DC8 52, 53, 54, 55, 56, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67
+
+   \              0x36 0x37    
+
+   \              0x38 0x38    
+
+   \              0x39 0x3A    
+
+   \              0x3B 0x3C    
+
+   \              0x3D 0x3E    
+
+   \              0x3F 0x40    
+
+   \              0x41 0x42    
+
+   \              0x43
+   \       0x84   0x44 0x45          DC8 68, 69, 70, 71, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 84, 85, 86
+
+   \              0x46 0x47    
+
+   \              0x49 0x4A    
+
+   \              0x4B 0x4C    
+
+   \              0x4D 0x4E    
+
+   \              0x4F 0x50    
+
+   \              0x51 0x52    
+
+   \              0x54 0x55    
+
+   \              0x56
+   \       0x95   0x57 0x58          DC8 87, 88, 89, 91, 92, 93, 94, 95, 97, 98, 99, 100, 102, 103, 104, 105
+
+   \              0x59 0x5B    
+
+   \              0x5C 0x5D    
+
+   \              0x5E 0x5F    
+
+   \              0x61 0x62    
+
+   \              0x63 0x64    
+
+   \              0x66 0x67    
+
+   \              0x68 0x69
+   \       0xA5   0x6B 0x6C          DC8 107, 108, 109, 111, 112, 113, 115, 116, 117, 119, 120, 121, 123
+
+   \              0x6D 0x6F    
+
+   \              0x70 0x71    
+
+   \              0x73 0x74    
+
+   \              0x75 0x77    
+
+   \              0x78 0x79    
+
+   \              0x7B
+   \       0xB2   0x7C 0x7E          DC8 124, 126, 127, 128, 130, 131, 133, 134, 136, 137, 139, 140, 142
+
+   \              0x7F 0x80    
+
+   \              0x82 0x83    
+
+   \              0x85 0x86    
+
+   \              0x88 0x89    
+
+   \              0x8B 0x8C    
+
+   \              0x8E
+   \       0xBF   0x8F 0x91          DC8 143, 145, 146, 148, 149, 151, 152, 154, 155, 157, 158, 160, 162
+
+   \              0x92 0x94    
+
+   \              0x95 0x97    
+
+   \              0x98 0x9A    
+
+   \              0x9B 0x9D    
+
+   \              0x9E 0xA0    
+
+   \              0xA2
+   \       0xCC   0xA3 0xA5          DC8 163, 165, 166, 168, 170, 171, 173, 175, 176, 178, 180, 181, 183
+
+   \              0xA6 0xA8    
+
+   \              0xAA 0xAB    
+
+   \              0xAD 0xAF    
+
+   \              0xB0 0xB2    
+
+   \              0xB4 0xB5    
+
+   \              0xB7
+   \       0xD9   0xB9 0xBA          DC8 185, 186, 188, 190, 192, 193, 195, 197, 199, 200, 202, 204, 206
+
+   \              0xBC 0xBE    
+
+   \              0xC0 0xC1    
+
+   \              0xC3 0xC5    
+
+   \              0xC7 0xC8    
+
+   \              0xCA 0xCC    
+
+   \              0xCE
+   \       0xE6   0xCF 0xD1          DC8 207, 209, 211, 213, 215, 217, 218, 220, 222, 224, 226, 228, 230
+
+   \              0xD3 0xD5    
+
+   \              0xD7 0xD9    
+
+   \              0xDA 0xDC    
+
+   \              0xDE 0xE0    
+
+   \              0xE2 0xE4    
+
+   \              0xE6
+   \       0xF3   0xE8 0xE9          DC8 232, 233, 235, 237, 239, 241, 243, 245, 247, 249, 251, 253, 255
+
+   \              0xEB 0xED    
+
+   \              0xEF 0xF1    
+
+   \              0xF3 0xF5    
+
+   \              0xF7 0xF9    
+
+   \              0xFB 0xFD    
+
+   \              0xFF
+     52              2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 10,
+     53              10, 11, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21,
+     54              22, 23, 23, 24, 24, 25, 26, 26, 27, 28, 28, 29, 30, 30, 31, 32, 32, 33, 34, 35, 35, 36, 37, 38,
+     55              38, 39, 40, 41, 42, 42, 43, 44, 45, 46, 47, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 56, 57, 58,
+     56              59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 84,
+     57              85, 86, 87, 88, 89, 91, 92, 93, 94, 95, 97, 98, 99, 100, 102, 103, 104, 105, 107, 108, 109, 111,
+     58              112, 113, 115, 116, 117, 119, 120, 121, 123, 124, 126, 127, 128, 130, 131, 133, 134, 136, 137,
+     59              139, 140, 142, 143, 145, 146, 148, 149, 151, 152, 154, 155, 157, 158, 160, 162, 163, 165, 166,
+     60              168, 170, 171, 173, 175, 176, 178, 180, 181, 183, 185, 186, 188, 190, 192, 193, 195, 197, 199,
+     61              200, 202, 204, 206, 207, 209, 211, 213, 215, 217, 218, 220, 222, 224, 226, 228, 230, 232, 233,
+     62              235, 237, 239, 241, 243, 245, 247, 249, 251, 253, 255 };
+     63          #endif
+     64          #endif
+     65          
+
+   \                                 In section .text, align 2, keep-with-next
+     66          static inline uint8_t LEDGamma(uint8_t v)
+     67          {
+     68          #ifdef WS2812B_USE_GAMMA_CORRECTION
+     69          #ifdef WS2812B_USE_PRECALCULATED_GAMMA_TABLE
+     70              return LEDGammaTable[v];
+   \                     LEDGamma: (+1)
+   \        0x0   0x.... 0x....      LDR.W    R1,??DataTable7
+   \        0x4   0xB2C0             UXTB     R0,R0
+   \        0x6   0x5C08             LDRB     R0,[R1, R0]
+   \        0x8   0x4770             BX       LR
+     71          #else
+     72              return (v * v + v) >> 8;
+     73          #endif
+     74          #else
+     75              return v;
+     76          #endif
+     77          }
+     78          
+
+   \                                 In section .bss, align 4
+     79          static volatile int DMABusy;
+   \                     DMABusy:
+   \        0x0                      DS8 4
+     80          
+
+   \                                 In section .bss, align 4
+     81          static PWM_t DMABuffer[WS2812B_BUFFER_SIZE];
+   \                     DMABuffer:
+   \        0x0                      DS8 2'880
+     82          
+
+   \                                 In section .bss, align 4
+     83          static SrcFilter_t *DMAFilter;
+   \                     DMAFilter:
+   \        0x0                      DS8 4
+
+   \                                 In section .bss, align 4
+     84          static void *DMASrc;
+   \                     DMASrc:
+   \        0x0                      DS8 4
+
+   \                                 In section .bss, align 4
+     85          static unsigned DMACount;
+   \                     DMACount:
+   \        0x0                      DS8 4
+     86          
+
+   \                                 In section .text, align 2, keep-with-next
+     87          static void SrcFilterNull(void **src, PWM_t **pwm, unsigned *count, unsigned size)
+     88          {
+   \                     SrcFilterNull: (+1)
+   \        0x0   0xB5F8             PUSH     {R3-R7,LR}
+   \        0x2   0x000C             MOVS     R4,R1
+   \        0x4   0x001D             MOVS     R5,R3
+     89              memset(*pwm, 0, size * sizeof(PWM_t));
+   \        0x6   0x2630             MOVS     R6,#+48
+   \        0x8   0xFB06 0xF105      MUL      R1,R6,R5
+   \        0xC   0x2200             MOVS     R2,#+0
+   \        0xE   0x6827             LDR      R7,[R4, #+0]
+   \       0x10   0x0038             MOVS     R0,R7
+   \       0x12   0x.... 0x....      BL       __aeabi_memset
+     90              *pwm += size;
+   \       0x16   0x6820             LDR      R0,[R4, #+0]
+   \       0x18   0x4375             MULS     R5,R6,R5
+   \       0x1A   0x4428             ADD      R0,R0,R5
+   \       0x1C   0x6020             STR      R0,[R4, #+0]
+     91          }
+   \       0x1E   0xBDF1             POP      {R0,R4-R7,PC}
+     92          
+
+   \                                 In section .text, align 2, keep-with-next
+     93          static void RGB2PWM(RGB_t *rgb, PWM_t *pwm)
+     94          {
+   \                     RGB2PWM: (+1)
+   \        0x0   0xB5F8             PUSH     {R3-R7,LR}
+   \        0x2   0x0007             MOVS     R7,R0
+   \        0x4   0x000C             MOVS     R4,R1
+     95              uint8_t r = LEDGamma(rgb->r);
+   \        0x6   0x7838             LDRB     R0,[R7, #+0]
+   \        0x8   0x.... 0x....      BL       LEDGamma
+   \        0xC   0x0005             MOVS     R5,R0
+     96              uint8_t g = LEDGamma(rgb->g);
+   \        0xE   0x7878             LDRB     R0,[R7, #+1]
+   \       0x10   0x.... 0x....      BL       LEDGamma
+   \       0x14   0x0006             MOVS     R6,R0
+     97              uint8_t b = LEDGamma(rgb->b);
+   \       0x16   0x78B8             LDRB     R0,[R7, #+2]
+   \       0x18   0x.... 0x....      BL       LEDGamma
+     98          
+     99              uint8_t mask = 128;
+   \       0x1C   0x2180             MOVS     R1,#+128
+    100          
+    101              int i;
+    102              for (i = 0; i < 8; i++)
+   \       0x1E   0x2200             MOVS     R2,#+0
+   \       0x20   0xE00F             B.N      ??RGB2PWM_0
+    103              {
+    104                  pwm->r[i] = r & mask ? WS2812B_PULSE_HIGH : WS2812B_PULSE_LOW;
+    105                  pwm->g[i] = g & mask ? WS2812B_PULSE_HIGH : WS2812B_PULSE_LOW;
+    106                  pwm->b[i] = b & mask ? WS2812B_PULSE_HIGH : WS2812B_PULSE_LOW;
+   \                     ??RGB2PWM_1: (+1)
+   \       0x22   0x233A             MOVS     R3,#+58
+   \       0x24   0xE007             B.N      ??RGB2PWM_2
+   \                     ??RGB2PWM_3: (+1)
+   \       0x26   0x233A             MOVS     R3,#+58
+   \                     ??RGB2PWM_4: (+1)
+   \       0x28   0xF824 0x3012      STRH     R3,[R4, R2, LSL #+1]
+   \       0x2C   0x0003             MOVS     R3,R0
+   \       0x2E   0xB2DB             UXTB     R3,R3
+   \       0x30   0x420B             TST      R3,R1
+   \       0x32   0xD0F6             BEQ.N    ??RGB2PWM_1
+   \       0x34   0x231D             MOVS     R3,#+29
+   \                     ??RGB2PWM_2: (+1)
+   \       0x36   0xEB04 0x0742      ADD      R7,R4,R2, LSL #+1
+   \       0x3A   0x843B             STRH     R3,[R7, #+32]
+    107          
+    108                  mask >>= 1;
+   \       0x3C   0xB2C9             UXTB     R1,R1
+   \       0x3E   0x0849             LSRS     R1,R1,#+1
+   \       0x40   0x1C52             ADDS     R2,R2,#+1
+   \                     ??RGB2PWM_0: (+1)
+   \       0x42   0x2A08             CMP      R2,#+8
+   \       0x44   0xDA0F             BGE.N    ??RGB2PWM_5
+   \       0x46   0x002B             MOVS     R3,R5
+   \       0x48   0xB2DB             UXTB     R3,R3
+   \       0x4A   0x420B             TST      R3,R1
+   \       0x4C   0xD001             BEQ.N    ??RGB2PWM_6
+   \       0x4E   0x231D             MOVS     R3,#+29
+   \       0x50   0xE000             B.N      ??RGB2PWM_7
+   \                     ??RGB2PWM_6: (+1)
+   \       0x52   0x233A             MOVS     R3,#+58
+   \                     ??RGB2PWM_7: (+1)
+   \       0x54   0xEB04 0x0742      ADD      R7,R4,R2, LSL #+1
+   \       0x58   0x823B             STRH     R3,[R7, #+16]
+   \       0x5A   0x0033             MOVS     R3,R6
+   \       0x5C   0xB2DB             UXTB     R3,R3
+   \       0x5E   0x420B             TST      R3,R1
+   \       0x60   0xD0E1             BEQ.N    ??RGB2PWM_3
+   \       0x62   0x231D             MOVS     R3,#+29
+   \       0x64   0xE7E0             B.N      ??RGB2PWM_4
+    109              }
+    110          }
+   \                     ??RGB2PWM_5: (+1)
+   \       0x66   0xBDF1             POP      {R0,R4-R7,PC}
+    111          
+
+   \                                 In section .text, align 2, keep-with-next
+    112          static void SrcFilterRGB(void **src, PWM_t **pwm, unsigned *count, unsigned size)
+    113          {
+   \                     SrcFilterRGB: (+1)
+   \        0x0   0xE92D 0x41F0      PUSH     {R4-R8,LR}
+   \        0x4   0x0004             MOVS     R4,R0
+   \        0x6   0x000D             MOVS     R5,R1
+   \        0x8   0x001E             MOVS     R6,R3
+    114              RGB_t *rgb = *src;
+   \        0xA   0x6827             LDR      R7,[R4, #+0]
+    115              PWM_t *p = *pwm;
+   \        0xC   0xF8D5 0x8000      LDR      R8,[R5, #+0]
+    116          
+    117              *count -= size;
+   \       0x10   0x6810             LDR      R0,[R2, #+0]
+   \       0x12   0x1B80             SUBS     R0,R0,R6
+   \       0x14   0x6010             STR      R0,[R2, #+0]
+   \       0x16   0xE006             B.N      ??SrcFilterRGB_0
+    118          
+    119              while (size--)
+    120              {
+    121                  RGB2PWM(rgb++, p++);
+   \                     ??SrcFilterRGB_1: (+1)
+   \       0x18   0x4641             MOV      R1,R8
+   \       0x1A   0xF111 0x0830      ADDS     R8,R1,#+48
+   \       0x1E   0x0038             MOVS     R0,R7
+   \       0x20   0x.... 0x....      BL       RGB2PWM
+   \       0x24   0x1CFF             ADDS     R7,R7,#+3
+    122              }
+   \                     ??SrcFilterRGB_0: (+1)
+   \       0x26   0x0030             MOVS     R0,R6
+   \       0x28   0x1E46             SUBS     R6,R0,#+1
+   \       0x2A   0x2800             CMP      R0,#+0
+   \       0x2C   0xD1F4             BNE.N    ??SrcFilterRGB_1
+    123          
+    124              *src = rgb;
+   \       0x2E   0x6027             STR      R7,[R4, #+0]
+    125              *pwm = p;
+   \       0x30   0xF8C5 0x8000      STR      R8,[R5, #+0]
+    126          }
+   \       0x34   0xE8BD 0x81F0      POP      {R4-R8,PC}
+    127          
+
+   \                                 In section .text, align 2, keep-with-next
+    128          static void SrcFilterHSV(void **src, PWM_t **pwm, unsigned *count, unsigned size)
+    129          {
+   \                     SrcFilterHSV: (+1)
+   \        0x0   0xE92D 0x41FC      PUSH     {R2-R8,LR}
+   \        0x4   0x0004             MOVS     R4,R0
+   \        0x6   0x000D             MOVS     R5,R1
+   \        0x8   0x001E             MOVS     R6,R3
+    130              HSV_t *hsv = *src;
+   \        0xA   0x6827             LDR      R7,[R4, #+0]
+    131              PWM_t *p = *pwm;
+   \        0xC   0xF8D5 0x8000      LDR      R8,[R5, #+0]
+    132          
+    133              *count -= size;
+   \       0x10   0x6810             LDR      R0,[R2, #+0]
+   \       0x12   0x1B80             SUBS     R0,R0,R6
+   \       0x14   0x6010             STR      R0,[R2, #+0]
+   \       0x16   0xE00A             B.N      ??SrcFilterHSV_0
+    134          
+    135              while (size--)
+    136              {
+    137                  RGB_t rgb;
+    138          
+    139                  HSV2RGB(hsv++, &rgb);
+   \                     ??SrcFilterHSV_1: (+1)
+   \       0x18   0x4669             MOV      R1,SP
+   \       0x1A   0x0038             MOVS     R0,R7
+   \       0x1C   0x.... 0x....      BL       HSV2RGB
+   \       0x20   0x1D3F             ADDS     R7,R7,#+4
+    140                  RGB2PWM(&rgb, p++);
+   \       0x22   0x4641             MOV      R1,R8
+   \       0x24   0x4668             MOV      R0,SP
+   \       0x26   0x.... 0x....      BL       RGB2PWM
+   \       0x2A   0xF118 0x0830      ADDS     R8,R8,#+48
+    141              }
+   \                     ??SrcFilterHSV_0: (+1)
+   \       0x2E   0x0030             MOVS     R0,R6
+   \       0x30   0x1E46             SUBS     R6,R0,#+1
+   \       0x32   0x2800             CMP      R0,#+0
+   \       0x34   0xD1F0             BNE.N    ??SrcFilterHSV_1
+    142          
+    143              *src = hsv;
+   \       0x36   0x6027             STR      R7,[R4, #+0]
+    144              *pwm = p;
+   \       0x38   0xF8C5 0x8000      STR      R8,[R5, #+0]
+    145          }
+   \       0x3C   0xE8BD 0x81F3      POP      {R0,R1,R4-R8,PC}
+    146          
+
+   \                                 In section .text, align 2, keep-with-next
+    147          static void DMASend(SrcFilter_t *filter, void *src, unsigned count)
+    148          {
+   \                     DMASend: (+1)
+   \        0x0   0xB5F8             PUSH     {R3-R7,LR}
+    149              if (!DMABusy)
+   \        0x2   0x....             LDR.N    R4,??DataTable7_1
+   \        0x4   0x6823             LDR      R3,[R4, #+0]
+   \        0x6   0x2B00             CMP      R3,#+0
+   \        0x8   0xD13A             BNE.N    ??DMASend_0
+    150              {
+    151                  DMABusy = 1;
+   \        0xA   0x2301             MOVS     R3,#+1
+   \        0xC   0x6023             STR      R3,[R4, #+0]
+    152          
+    153                  DMAFilter = filter;
+   \        0xE   0x....             LDR.N    R4,??DataTable7_2
+   \       0x10   0x6020             STR      R0,[R4, #+0]
+    154                  DMASrc = src;
+   \       0x12   0x....             LDR.N    R5,??DataTable7_3
+   \       0x14   0x6029             STR      R1,[R5, #+0]
+    155                  DMACount = count;
+   \       0x16   0x....             LDR.N    R6,??DataTable7_4
+   \       0x18   0x6032             STR      R2,[R6, #+0]
+    156          
+    157                  PWM_t *pwm = DMABuffer;
+   \       0x1A   0x....             LDR.N    R0,??DataTable7_5
+   \       0x1C   0x9000             STR      R0,[SP, #+0]
+    158                  PWM_t *end = &DMABuffer[WS2812B_BUFFER_SIZE];
+   \       0x1E   0xF510 0x6734      ADDS     R7,R0,#+2880
+    159          
+    160                  // Start sequence
+    161                  SrcFilterNull(NULL, &pwm, NULL, WS2812B_START_SIZE);
+   \       0x22   0x2302             MOVS     R3,#+2
+   \       0x24   0x2200             MOVS     R2,#+0
+   \       0x26   0x4669             MOV      R1,SP
+   \       0x28   0x2000             MOVS     R0,#+0
+   \       0x2A   0x.... 0x....      BL       SrcFilterNull
+    162          
+    163                  // RGB PWM data
+    164                  DMAFilter(&DMASrc, &pwm, &DMACount, MIN(DMACount, end - pwm));
+   \       0x2E   0x6833             LDR      R3,[R6, #+0]
+   \       0x30   0x9800             LDR      R0,[SP, #+0]
+   \       0x32   0x1A38             SUBS     R0,R7,R0
+   \       0x34   0x2130             MOVS     R1,#+48
+   \       0x36   0xFB90 0xF0F1      SDIV     R0,R0,R1
+   \       0x3A   0x4283             CMP      R3,R0
+   \       0x3C   0xD300             BCC.N    ??DMASend_1
+   \                     ??DMASend_2: (+1)
+   \       0x3E   0x0003             MOVS     R3,R0
+   \                     ??DMASend_1: (+1)
+   \       0x40   0x0032             MOVS     R2,R6
+   \       0x42   0x4669             MOV      R1,SP
+   \       0x44   0x0028             MOVS     R0,R5
+   \       0x46   0x6824             LDR      R4,[R4, #+0]
+   \       0x48   0x47A0             BLX      R4
+    165          
+    166                  // Rest of buffer
+    167                  if (pwm < end)
+   \       0x4A   0x9800             LDR      R0,[SP, #+0]
+   \       0x4C   0x42B8             CMP      R0,R7
+   \       0x4E   0xD209             BCS.N    ??DMASend_3
+    168                      SrcFilterNull(NULL, &pwm, NULL, end - pwm);
+   \       0x50   0x9800             LDR      R0,[SP, #+0]
+   \       0x52   0x1A3F             SUBS     R7,R7,R0
+   \       0x54   0x2030             MOVS     R0,#+48
+   \       0x56   0xFB97 0xF3F0      SDIV     R3,R7,R0
+   \       0x5A   0x2200             MOVS     R2,#+0
+   \       0x5C   0x4669             MOV      R1,SP
+   \       0x5E   0x2000             MOVS     R0,#+0
+   \       0x60   0x.... 0x....      BL       SrcFilterNull
+    169          
+    170                  // Start transfer
+    171                  DMA_SetCurrDataCounter(WS2812B_DMA_CHANNEL, sizeof(DMABuffer) / sizeof(uint16_t));
+   \                     ??DMASend_3: (+1)
+   \       0x64   0x....             LDR.N    R4,??DataTable7_6
+   \       0x66   0xF44F 0x61B4      MOV      R1,#+1440
+   \       0x6A   0x0020             MOVS     R0,R4
+   \       0x6C   0x.... 0x....      BL       DMA_SetCurrDataCounter
+    172          
+    173                  TIM_Cmd(WS2812B_TIM, ENABLE);
+   \       0x70   0x2101             MOVS     R1,#+1
+   \       0x72   0x....             LDR.N    R0,??DataTable7_7
+   \       0x74   0x.... 0x....      BL       TIM_Cmd
+    174                  DMA_Cmd(WS2812B_DMA_CHANNEL, ENABLE);
+   \       0x78   0x2101             MOVS     R1,#+1
+   \       0x7A   0x0020             MOVS     R0,R4
+   \       0x7C   0x.... 0x....      BL       DMA_Cmd
+    175              }
+    176          }
+   \                     ??DMASend_0: (+1)
+   \       0x80   0xBDF1             POP      {R0,R4-R7,PC}
+    177          
+
+   \                                 In section .text, align 2, keep-with-next
+    178          static void DMASendNext(PWM_t *pwm, PWM_t *end)
+    179          {
+   \                     DMASendNext: (+1)
+   \        0x0   0xB531             PUSH     {R0,R4,R5,LR}
+   \        0x2   0x000D             MOVS     R5,R1
+    180              if (!DMAFilter)
+   \        0x4   0x....             LDR.N    R4,??DataTable7_2
+   \        0x6   0x6820             LDR      R0,[R4, #+0]
+   \        0x8   0x2800             CMP      R0,#+0
+   \        0xA   0xD10B             BNE.N    ??DMASendNext_0
+    181              {
+    182                  // Stop transfer
+    183                  TIM_Cmd(WS2812B_TIM, DISABLE);
+   \        0xC   0x2100             MOVS     R1,#+0
+   \        0xE   0x....             LDR.N    R0,??DataTable7_7
+   \       0x10   0x.... 0x....      BL       TIM_Cmd
+    184                  DMA_Cmd(WS2812B_DMA_CHANNEL, DISABLE);
+   \       0x14   0x2100             MOVS     R1,#+0
+   \       0x16   0x....             LDR.N    R0,??DataTable7_6
+   \       0x18   0x.... 0x....      BL       DMA_Cmd
+    185          
+    186                  DMABusy = 0;
+   \       0x1C   0x2000             MOVS     R0,#+0
+   \       0x1E   0x....             LDR.N    R1,??DataTable7_1
+   \       0x20   0x6008             STR      R0,[R1, #+0]
+   \       0x22   0xE02A             B.N      ??DMASendNext_1
+    187              }
+    188              else if (!DMACount)
+   \                     ??DMASendNext_0: (+1)
+   \       0x24   0x....             LDR.N    R2,??DataTable7_4
+   \       0x26   0x6810             LDR      R0,[R2, #+0]
+   \       0x28   0x2800             CMP      R0,#+0
+   \       0x2A   0xD10C             BNE.N    ??DMASendNext_2
+    189              {
+    190                  // Rest of buffer
+    191                  SrcFilterNull(NULL, &pwm, NULL, end - pwm);
+   \       0x2C   0x9800             LDR      R0,[SP, #+0]
+   \       0x2E   0x1A2D             SUBS     R5,R5,R0
+   \       0x30   0x2030             MOVS     R0,#+48
+   \       0x32   0xFB95 0xF3F0      SDIV     R3,R5,R0
+   \       0x36   0x2200             MOVS     R2,#+0
+   \       0x38   0x4669             MOV      R1,SP
+   \       0x3A   0x2000             MOVS     R0,#+0
+   \       0x3C   0x.... 0x....      BL       SrcFilterNull
+    192          
+    193                  DMAFilter = NULL;
+   \       0x40   0x2000             MOVS     R0,#+0
+   \       0x42   0x6020             STR      R0,[R4, #+0]
+   \       0x44   0xE019             B.N      ??DMASendNext_1
+    194              }
+    195              else
+    196              {
+    197                  // RGB PWM data
+    198                  DMAFilter(&DMASrc, &pwm, &DMACount, MIN(DMACount, end - pwm));
+   \                     ??DMASendNext_2: (+1)
+   \       0x46   0x6813             LDR      R3,[R2, #+0]
+   \       0x48   0x9800             LDR      R0,[SP, #+0]
+   \       0x4A   0x1A28             SUBS     R0,R5,R0
+   \       0x4C   0x2130             MOVS     R1,#+48
+   \       0x4E   0xFB90 0xF0F1      SDIV     R0,R0,R1
+   \       0x52   0x4283             CMP      R3,R0
+   \       0x54   0xD300             BCC.N    ??DMASendNext_3
+   \                     ??DMASendNext_4: (+1)
+   \       0x56   0x0003             MOVS     R3,R0
+   \                     ??DMASendNext_3: (+1)
+   \       0x58   0x4669             MOV      R1,SP
+   \       0x5A   0x....             LDR.N    R0,??DataTable7_3
+   \       0x5C   0x6824             LDR      R4,[R4, #+0]
+   \       0x5E   0x47A0             BLX      R4
+    199          
+    200                  // Rest of buffer
+    201                  if (pwm < end)
+   \       0x60   0x9800             LDR      R0,[SP, #+0]
+   \       0x62   0x42A8             CMP      R0,R5
+   \       0x64   0xD209             BCS.N    ??DMASendNext_1
+    202                      SrcFilterNull(NULL, &pwm, NULL, end - pwm);
+   \       0x66   0x9800             LDR      R0,[SP, #+0]
+   \       0x68   0x1A2D             SUBS     R5,R5,R0
+   \       0x6A   0x2030             MOVS     R0,#+48
+   \       0x6C   0xFB95 0xF3F0      SDIV     R3,R5,R0
+   \       0x70   0x2200             MOVS     R2,#+0
+   \       0x72   0x4669             MOV      R1,SP
+   \       0x74   0x2000             MOVS     R0,#+0
+   \       0x76   0x.... 0x....      BL       SrcFilterNull
+    203              }
+    204          }
+   \                     ??DMASendNext_1: (+1)
+   \       0x7A   0xBD31             POP      {R0,R4,R5,PC}
+    205          
+
+   \                                 In section .text, align 2, keep-with-next
+    206          void WS2812B_DMA_HANDLER(void)
+    207          {
+   \                     DMA1_Channel1_IRQHandler: (+1)
+   \        0x0   0xB580             PUSH     {R7,LR}
+    208              if (DMA_GetITStatus(WS2812B_DMA_IT_HT) != RESET)
+   \        0x2   0x2004             MOVS     R0,#+4
+   \        0x4   0x.... 0x....      BL       DMA_GetITStatus
+   \        0x8   0x2800             CMP      R0,#+0
+   \        0xA   0xD007             BEQ.N    ??DMA1_Channel1_IRQHandler_0
+    209              {
+    210                  DMA_ClearITPendingBit(WS2812B_DMA_IT_HT);
+   \        0xC   0x2004             MOVS     R0,#+4
+   \        0xE   0x.... 0x....      BL       DMA_ClearITPendingBit
+    211                  DMASendNext(DMABuffer, &DMABuffer[WS2812B_BUFFER_SIZE / 2]);
+   \       0x12   0x....             LDR.N    R0,??DataTable7_5
+   \       0x14   0xF510 0x61B4      ADDS     R1,R0,#+1440
+   \       0x18   0x.... 0x....      BL       DMASendNext
+    212              }
+    213          
+    214              if (DMA_GetITStatus(WS2812B_DMA_IT_TC) != RESET)
+   \                     ??DMA1_Channel1_IRQHandler_0: (+1)
+   \       0x1C   0x2002             MOVS     R0,#+2
+   \       0x1E   0x.... 0x....      BL       DMA_GetITStatus
+   \       0x22   0x2800             CMP      R0,#+0
+   \       0x24   0xD009             BEQ.N    ??DMA1_Channel1_IRQHandler_1
+    215              {
+    216                  DMA_ClearITPendingBit(WS2812B_DMA_IT_TC);
+   \       0x26   0x2002             MOVS     R0,#+2
+   \       0x28   0x.... 0x....      BL       DMA_ClearITPendingBit
+    217                  DMASendNext(&DMABuffer[WS2812B_BUFFER_SIZE / 2], &DMABuffer[WS2812B_BUFFER_SIZE]);
+   \       0x2C   0x....             LDR.N    R0,??DataTable7_5
+   \       0x2E   0xF510 0x6134      ADDS     R1,R0,#+2880
+   \       0x32   0xF510 0x60B4      ADDS     R0,R0,#+1440
+   \       0x36   0x.... 0x....      BL       DMASendNext
+    218              }
+    219          }
+   \                     ??DMA1_Channel1_IRQHandler_1: (+1)
+   \       0x3A   0xBD01             POP      {R0,PC}
+    220          
+    221          //------------------------------------------------------------
+    222          // Interface
+    223          //------------------------------------------------------------
+    224          
+
+   \                                 In section .text, align 2, keep-with-next
+    225          void ws2812b_Init(void)
+    226          {
+   \                     ws2812b_Init: (+1)
+   \        0x0   0xB538             PUSH     {R3-R5,LR}
+   \        0x2   0xB094             SUB      SP,SP,#+80
+    227              // Turn on peripheral clock
+    228              RCC_APB1PeriphClockCmd(WS2812B_APB1_RCC, ENABLE);
+   \        0x4   0x2101             MOVS     R1,#+1
+   \        0x6   0x2004             MOVS     R0,#+4
+   \        0x8   0x.... 0x....      BL       RCC_APB1PeriphClockCmd
+    229              RCC_APB2PeriphClockCmd(WS2812B_APB2_RCC, ENABLE);
+   \        0xC   0x2101             MOVS     R1,#+1
+   \        0xE   0x2008             MOVS     R0,#+8
+   \       0x10   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+    230          
+    231              RCC_AHBPeriphClockCmd(WS2812B_AHB_RCC, ENABLE);
+   \       0x14   0x2101             MOVS     R1,#+1
+   \       0x16   0x2001             MOVS     R0,#+1
+   \       0x18   0x.... 0x....      BL       RCC_AHBPeriphClockCmd
+    232          
+    233              // Initialize GPIO pin
+    234              GPIO_InitTypeDef GPIO_InitStruct;
+    235          
+    236              //GPIO_StructInit(&GPIO_InitStruct);
+    237          
+    238              GPIO_InitStruct.GPIO_Pin = WS2812B_GPIO_PIN;
+   \       0x1C   0x2040             MOVS     R0,#+64
+   \       0x1E   0xF8AD 0x0004      STRH     R0,[SP, #+4]
+    239              GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+   \       0x22   0x2003             MOVS     R0,#+3
+   \       0x24   0xF88D 0x0006      STRB     R0,[SP, #+6]
+    240              GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF_PP;
+   \       0x28   0x2018             MOVS     R0,#+24
+   \       0x2A   0xF88D 0x0007      STRB     R0,[SP, #+7]
+    241          
+    242              GPIO_Init(WS2812B_GPIO, &GPIO_InitStruct);
+   \       0x2E   0xA901             ADD      R1,SP,#+4
+   \       0x30   0x....             LDR.N    R0,??DataTable7_8
+   \       0x32   0x.... 0x....      BL       GPIO_Init
+    243          
+    244              // Initialize timer clock
+    245              TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStruct;
+    246          
+    247              //TIM_TimeBaseStructInit(&TIM_TimeBaseInitStruct);
+    248          
+    249              TIM_TimeBaseInitStruct.TIM_Prescaler = (SystemCoreClock / WS2812B_FREQUENCY) - 1;
+   \       0x36   0x....             LDR.N    R0,??DataTable7_9
+   \       0x38   0x6800             LDR      R0,[R0, #+0]
+   \       0x3A   0x....             LDR.N    R1,??DataTable7_10
+   \       0x3C   0xFBB0 0xF0F1      UDIV     R0,R0,R1
+   \       0x40   0x1E40             SUBS     R0,R0,#+1
+   \       0x42   0xF8AD 0x0008      STRH     R0,[SP, #+8]
+    250              TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;
+   \       0x46   0x2000             MOVS     R0,#+0
+   \       0x48   0xF8AD 0x000A      STRH     R0,[SP, #+10]
+    251              TIM_TimeBaseInitStruct.TIM_Period = WS2812B_PERIOD - 1;
+   \       0x4C   0x2059             MOVS     R0,#+89
+   \       0x4E   0xF8AD 0x000C      STRH     R0,[SP, #+12]
+    252              TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
+   \       0x52   0x2000             MOVS     R0,#+0
+   \       0x54   0xF8AD 0x000E      STRH     R0,[SP, #+14]
+    253          
+    254              TIM_TimeBaseInit(WS2812B_TIM, &TIM_TimeBaseInitStruct);
+   \       0x58   0x....             LDR.N    R4,??DataTable7_7
+   \       0x5A   0xA902             ADD      R1,SP,#+8
+   \       0x5C   0x0020             MOVS     R0,R4
+   \       0x5E   0x.... 0x....      BL       TIM_TimeBaseInit
+    255          
+    256              // Initialize timer PWM
+    257              TIM_OCInitTypeDef TIM_OCInitStruct;
+    258          
+    259              //TIM_OCStructInit(&TIM_OCInitStruct);
+    260          
+    261              TIM_OCInitStruct.TIM_OCMode = TIM_OCMode_PWM1;
+   \       0x62   0x2060             MOVS     R0,#+96
+   \       0x64   0xF8AD 0x0014      STRH     R0,[SP, #+20]
+    262              TIM_OCInitStruct.TIM_OutputState = TIM_OutputState_Enable;
+   \       0x68   0x2001             MOVS     R0,#+1
+   \       0x6A   0xF8AD 0x0016      STRH     R0,[SP, #+22]
+    263              TIM_OCInitStruct.TIM_Pulse = 0;
+   \       0x6E   0x2000             MOVS     R0,#+0
+   \       0x70   0xF8AD 0x001A      STRH     R0,[SP, #+26]
+    264              TIM_OCInitStruct.TIM_OCPolarity = TIM_OCPolarity_High;
+   \       0x74   0x2000             MOVS     R0,#+0
+   \       0x76   0xF8AD 0x001C      STRH     R0,[SP, #+28]
+    265          
+    266              WS2812B_TIM_OCINIT(WS2812B_TIM, &TIM_OCInitStruct);
+   \       0x7A   0xA905             ADD      R1,SP,#+20
+   \       0x7C   0x0020             MOVS     R0,R4
+   \       0x7E   0x.... 0x....      BL       TIM_OC1Init
+    267              WS2812B_TIM_OCPRELOAD(WS2812B_TIM, TIM_OCPreload_Enable);
+   \       0x82   0x2108             MOVS     R1,#+8
+   \       0x84   0x0020             MOVS     R0,R4
+   \       0x86   0x.... 0x....      BL       TIM_OC1PreloadConfig
+    268          
+    269              // Initialize DMA channel
+    270              DMA_InitTypeDef DMA_InitStruct;
+    271          
+    272              //DMA_StructInit(&DMA_InitStruct);
+    273          
+    274              DMA_InitStruct.DMA_PeripheralBaseAddr = (uint32_t) & WS2812B_TIM_DMA_CCR;
+   \       0x8A   0x....             LDR.N    R0,??DataTable7_11
+   \       0x8C   0x9009             STR      R0,[SP, #+36]
+    275              DMA_InitStruct.DMA_MemoryBaseAddr = (uint32_t) DMABuffer;
+   \       0x8E   0x....             LDR.N    R0,??DataTable7_5
+   \       0x90   0x900A             STR      R0,[SP, #+40]
+    276              DMA_InitStruct.DMA_DIR = DMA_DIR_PeripheralDST;
+   \       0x92   0x2010             MOVS     R0,#+16
+   \       0x94   0x900B             STR      R0,[SP, #+44]
+    277              DMA_InitStruct.DMA_BufferSize = sizeof(DMABuffer) / sizeof(uint16_t);
+   \       0x96   0xF44F 0x60B4      MOV      R0,#+1440
+   \       0x9A   0x900C             STR      R0,[SP, #+48]
+    278              DMA_InitStruct.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+   \       0x9C   0x2000             MOVS     R0,#+0
+   \       0x9E   0x900D             STR      R0,[SP, #+52]
+    279              DMA_InitStruct.DMA_MemoryInc = DMA_MemoryInc_Enable;
+   \       0xA0   0x2080             MOVS     R0,#+128
+   \       0xA2   0x900E             STR      R0,[SP, #+56]
+    280              DMA_InitStruct.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+   \       0xA4   0xF44F 0x7080      MOV      R0,#+256
+   \       0xA8   0x900F             STR      R0,[SP, #+60]
+    281              DMA_InitStruct.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+   \       0xAA   0xF44F 0x6080      MOV      R0,#+1024
+   \       0xAE   0x9010             STR      R0,[SP, #+64]
+    282              DMA_InitStruct.DMA_Mode = DMA_Mode_Circular;
+   \       0xB0   0x2020             MOVS     R0,#+32
+   \       0xB2   0x9011             STR      R0,[SP, #+68]
+    283              DMA_InitStruct.DMA_Priority = DMA_Priority_High;
+   \       0xB4   0xF44F 0x5000      MOV      R0,#+8192
+   \       0xB8   0x9012             STR      R0,[SP, #+72]
+    284              DMA_InitStruct.DMA_M2M = DMA_M2M_Disable;
+   \       0xBA   0x2000             MOVS     R0,#+0
+   \       0xBC   0x9013             STR      R0,[SP, #+76]
+    285          
+    286              DMA_Init(WS2812B_DMA_CHANNEL, &DMA_InitStruct);
+   \       0xBE   0x....             LDR.N    R5,??DataTable7_6
+   \       0xC0   0xA909             ADD      R1,SP,#+36
+   \       0xC2   0x0028             MOVS     R0,R5
+   \       0xC4   0x.... 0x....      BL       DMA_Init
+    287          
+    288              // Turn on timer DMA requests
+    289              TIM_DMACmd(WS2812B_TIM, WS2812B_TIM_DMA_CC, ENABLE);
+   \       0xC8   0x2201             MOVS     R2,#+1
+   \       0xCA   0xF44F 0x7100      MOV      R1,#+512
+   \       0xCE   0x0020             MOVS     R0,R4
+   \       0xD0   0x.... 0x....      BL       TIM_DMACmd
+    290          
+    291              // Initialize DMA interrupt
+    292              NVIC_InitTypeDef NVIC_InitStruct;
+    293          
+    294              NVIC_InitStruct.NVIC_IRQChannel = WS2812B_DMA_IRQ;
+   \       0xD4   0x200B             MOVS     R0,#+11
+   \       0xD6   0xF88D 0x0000      STRB     R0,[SP, #+0]
+    295              NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = WS2812B_IRQ_PRIO;
+   \       0xDA   0x2000             MOVS     R0,#+0
+   \       0xDC   0xF88D 0x0001      STRB     R0,[SP, #+1]
+    296              NVIC_InitStruct.NVIC_IRQChannelSubPriority = WS2812B_IRQ_SUBPRIO;
+   \       0xE0   0x2000             MOVS     R0,#+0
+   \       0xE2   0xF88D 0x0002      STRB     R0,[SP, #+2]
+    297              NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
+   \       0xE6   0x2001             MOVS     R0,#+1
+   \       0xE8   0xF88D 0x0003      STRB     R0,[SP, #+3]
+    298          
+    299              NVIC_Init(&NVIC_InitStruct);
+   \       0xEC   0x4668             MOV      R0,SP
+   \       0xEE   0x.... 0x....      BL       NVIC_Init
+    300          
+    301              // Enable DMA interrupt
+    302              DMA_ITConfig(WS2812B_DMA_CHANNEL, DMA_IT_HT | DMA_IT_TC, ENABLE);
+   \       0xF2   0x2201             MOVS     R2,#+1
+   \       0xF4   0x2106             MOVS     R1,#+6
+   \       0xF6   0x0028             MOVS     R0,R5
+   \       0xF8   0x.... 0x....      BL       DMA_ITConfig
+    303          }
+   \       0xFC   0xB015             ADD      SP,SP,#+84
+   \       0xFE   0xBD30             POP      {R4,R5,PC}
+    304          
+
+   \                                 In section .text, align 2, keep-with-next
+    305          inline int ws2812b_IsReady(void)
+    306          {
+    307              return !DMABusy;
+   \                     ws2812b_IsReady: (+1)
+   \        0x0   0x....             LDR.N    R0,??DataTable7_1
+   \        0x2   0x6800             LDR      R0,[R0, #+0]
+   \        0x4   0x2800             CMP      R0,#+0
+   \        0x6   0xD101             BNE.N    ??ws2812b_IsReady_0
+   \        0x8   0x2001             MOVS     R0,#+1
+   \        0xA   0xE000             B.N      ??ws2812b_IsReady_1
+   \                     ??ws2812b_IsReady_0: (+1)
+   \        0xC   0x2000             MOVS     R0,#+0
+   \                     ??ws2812b_IsReady_1: (+1)
+   \        0xE   0xB2C0             UXTB     R0,R0
+   \       0x10   0x4770             BX       LR
+    308          }
+    309          
+
+   \                                 In section .text, align 2, keep-with-next
+    310          void ws2812b_SendRGB(RGB_t *rgb, unsigned count)
+    311          {
+   \                     ws2812b_SendRGB: (+1)
+   \        0x0   0xB580             PUSH     {R7,LR}
+   \        0x2   0x000A             MOVS     R2,R1
+    312              DMASend(&SrcFilterRGB, rgb, count);
+   \        0x4   0x0001             MOVS     R1,R0
+   \        0x6   0x....             LDR.N    R0,??DataTable7_12
+   \        0x8   0x.... 0x....      BL       DMASend
+    313          }
+   \        0xC   0xBD01             POP      {R0,PC}
+    314          
+
+   \                                 In section .text, align 2, keep-with-next
+    315          void ws2812b_SendHSV(HSV_t *hsv, unsigned count)
+    316          {
+   \                     ws2812b_SendHSV: (+1)
+   \        0x0   0xB580             PUSH     {R7,LR}
+   \        0x2   0x000A             MOVS     R2,R1
+    317              DMASend(&SrcFilterHSV, hsv, count);
+   \        0x4   0x0001             MOVS     R1,R0
+   \        0x6   0x....             LDR.N    R0,??DataTable7_13
+   \        0x8   0x.... 0x....      BL       DMASend
+    318          }
+   \        0xC   0xBD01             POP      {R0,PC}
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7:
+   \        0x0   0x....'....        DC32     LEDGammaTable
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_1:
+   \        0x0   0x....'....        DC32     DMABusy
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_2:
+   \        0x0   0x....'....        DC32     DMAFilter
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_3:
+   \        0x0   0x....'....        DC32     DMASrc
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_4:
+   \        0x0   0x....'....        DC32     DMACount
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_5:
+   \        0x0   0x....'....        DC32     DMABuffer
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_6:
+   \        0x0   0x4002'0008        DC32     0x40020008
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_7:
+   \        0x0   0x4000'0800        DC32     0x40000800
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_8:
+   \        0x0   0x4001'0C00        DC32     0x40010c00
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_9:
+   \        0x0   0x....'....        DC32     SystemCoreClock
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_10:
+   \        0x0   0x044A'A200        DC32     0x44aa200
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_11:
+   \        0x0   0x4000'0834        DC32     0x40000834
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_12:
+   \        0x0   0x....'....        DC32     SrcFilterRGB
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable7_13:
+   \        0x0   0x....'....        DC32     SrcFilterHSV
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   DMA1_Channel1_IRQHandler
+         8   -> DMASendNext
+         8   -> DMA_ClearITPendingBit
+         8   -> DMA_GetITStatus
+      24   DMASend
+        24   -- Indirect call
+        24   -> DMA_Cmd
+        24   -> DMA_SetCurrDataCounter
+        24   -> SrcFilterNull
+        24   -> TIM_Cmd
+      16   DMASendNext
+        16   -- Indirect call
+        16   -> DMA_Cmd
+        16   -> SrcFilterNull
+        16   -> TIM_Cmd
+       0   LEDGamma
+      24   RGB2PWM
+        24   -> LEDGamma
+      32   SrcFilterHSV
+        32   -> HSV2RGB
+        32   -> RGB2PWM
+      24   SrcFilterNull
+        24   -> __aeabi_memset
+      24   SrcFilterRGB
+        24   -> RGB2PWM
+      96   ws2812b_Init
+        96   -> DMA_ITConfig
+        96   -> DMA_Init
+        96   -> GPIO_Init
+        96   -> NVIC_Init
+        96   -> RCC_AHBPeriphClockCmd
+        96   -> RCC_APB1PeriphClockCmd
+        96   -> RCC_APB2PeriphClockCmd
+        96   -> TIM_DMACmd
+        96   -> TIM_OC1Init
+        96   -> TIM_OC1PreloadConfig
+        96   -> TIM_TimeBaseInit
+       0   ws2812b_IsReady
+       8   ws2812b_SendHSV
+         8   -> DMASend
+       8   ws2812b_SendRGB
+         8   -> DMASend
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable7
+       4  ??DataTable7_1
+       4  ??DataTable7_10
+       4  ??DataTable7_11
+       4  ??DataTable7_12
+       4  ??DataTable7_13
+       4  ??DataTable7_2
+       4  ??DataTable7_3
+       4  ??DataTable7_4
+       4  ??DataTable7_5
+       4  ??DataTable7_6
+       4  ??DataTable7_7
+       4  ??DataTable7_8
+       4  ??DataTable7_9
+      60  DMA1_Channel1_IRQHandler
+   2'880  DMABuffer
+       4  DMABusy
+       4  DMACount
+       4  DMAFilter
+     130  DMASend
+     124  DMASendNext
+       4  DMASrc
+      10  LEDGamma
+     256  LEDGammaTable
+     104  RGB2PWM
+      64  SrcFilterHSV
+      32  SrcFilterNull
+      56  SrcFilterRGB
+     256  ws2812b_Init
+      18  ws2812b_IsReady
+      14  ws2812b_SendHSV
+      14  ws2812b_SendRGB
+
+ 
+ 2'896 bytes in section .bss
+   256 bytes in section .rodata
+   938 bytes in section .text
+ 
+   938 bytes of CODE  memory
+   256 bytes of CONST memory
+ 2'896 bytes of DATA  memory
+
+Errors: none
+Warnings: none

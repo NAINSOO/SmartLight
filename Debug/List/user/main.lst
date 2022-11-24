@@ -1,0 +1,619 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V9.30.1.335/W64 for ARM         23/Nov/2022  22:05:42
+# Copyright 1999-2022 IAR Systems AB.
+#
+#    Cpu mode                     =  thumb
+#    Endian                       =  little
+#    Source file                  =
+#        C:\Users\NAINSOO\Desktop\programming\project_test\user\main.c
+#    Command line                 =
+#        -f
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\Obj\user\main.o.rsp
+#        (C:\Users\NAINSOO\Desktop\programming\project_test\user\main.c -D
+#        USE_STDPERIPH_DRIVER -D STM32F10X_CL -lC
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\List\user -o
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\Obj\user
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program Files\IAR
+#        Systems\Embedded Workbench 9.1\arm\inc\c\DLib_Config_Normal.h" -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\CMSIS\DeviceSupport\
+#        -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\CMSIS\DeviceSupport\Startup\
+#        -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\inc\
+#        -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\src\
+#        -I C:\Users\NAINSOO\Desktop\programming\project_test\user\ -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\LCD\ -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\user\inc\ -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\ws2812\inc\
+#        -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\ws2812\src\
+#        -Ol -I "C:\Program Files\IAR Systems\Embedded Workbench
+#        9.1\arm\CMSIS\Core\Include\\") --dependencies=n
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\Obj\user\main.o.d
+#    Locale                       =  C
+#    List file                    =
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\List\user\main.lst
+#    Object file                  =
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\Obj\user\main.o
+#    Runtime model:                  
+#      __CPP_Runtime              =  1
+#      __SystemLibrary            =  DLib
+#      __dlib_file_descriptor     =  0
+#      __dlib_full_locale_support =  0
+#      __dlib_version             =  6
+#      __size_limit               =  32768|ARM.EW.LINKER
+#
+###############################################################################
+
+C:\Users\NAINSOO\Desktop\programming\project_test\user\main.c
+      1          #include <misc.h>
+      2          #include <stm32f10x.h>
+      3          #include <stm32f10x_exti.h>
+      4          #include <stm32f10x_gpio.h>
+      5          #include <stm32f10x_rcc.h>
+      6          #include <stm32f10x_usart.h>
+      7          #include <stm32f10x_adc.h>
+      8          #include <lcd.h>
+      9          #include <Touch.h>
+     10          #include <stdio.h>
+     11          #include <stdlib.h>
+     12          /* function prototype */
+     13          void RCC_Configure(void);
+     14          void GPIO_Configure(void);
+     15          void EXTI_Configure(void);
+     16          void NVIC_Configure(void);
+     17          
+     18          //---------------------------------------------------------------------------------------------------
+     19          
+
+   \                                 In section .bss, align 2
+     20          uint16_t jodo;
+   \                     jodo:
+   \        0x0                      DS8 2
+
+   \                                 In section .bss, align 4
+     21          int j;
+   \                     j:
+   \        0x0                      DS8 4
+
+   \                                 In section .data, align 4
+     22          int t = 1;
+   \                     t:
+   \        0x0   0x0000'0001        DC32 1
+     23          
+
+   \                                 In section .text, align 2, keep-with-next
+     24          void delay(int i){
+     25          	int j;
+     26          	for(j=0; j<=i * 100000; j++);
+   \                     delay: (+1)
+   \        0x0   0x2100             MOVS     R1,#+0
+   \        0x2   0xE000             B.N      ??delay_0
+   \                     ??delay_1: (+1)
+   \        0x4   0x1C49             ADDS     R1,R1,#+1
+   \                     ??delay_0: (+1)
+   \        0x6   0x....             LDR.N    R2,??DataTable6
+   \        0x8   0xFB02 0xF200      MUL      R2,R2,R0
+   \        0xC   0x428A             CMP      R2,R1
+   \        0xE   0xDAF9             BGE.N    ??delay_1
+     27          }
+   \       0x10   0x4770             BX       LR
+     28          
+
+   \                                 In section .text, align 2, keep-with-next
+     29          void set_ENABLE(void) {
+   \                     set_ENABLE: (+1)
+   \        0x0   0xB580             PUSH     {R7,LR}
+     30          	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);	 // interrupt
+   \        0x2   0x2101             MOVS     R1,#+1
+   \        0x4   0x2001             MOVS     R0,#+1
+   \        0x6   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     31          	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOE,ENABLE);     // RCC GPIO E
+   \        0xA   0x2101             MOVS     R1,#+1
+   \        0xC   0x2040             MOVS     R0,#+64
+   \        0xE   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     32          	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC,ENABLE);     // RCC GPIO C
+   \       0x12   0x2101             MOVS     R1,#+1
+   \       0x14   0x2010             MOVS     R0,#+16
+   \       0x16   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     33          	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD,ENABLE);     // RCC GPIO D
+   \       0x1A   0x2101             MOVS     R1,#+1
+   \       0x1C   0x2020             MOVS     R0,#+32
+   \       0x1E   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     34          	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);	 // ADC1
+   \       0x22   0x2101             MOVS     R1,#+1
+   \       0x24   0xF44F 0x7000      MOV      R0,#+512
+   \       0x28   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     35          }
+   \       0x2C   0xBD01             POP      {R0,PC}
+     36          
+
+   \                                 In section .text, align 2, keep-with-next
+     37          void set_PC1(void) {
+   \                     set_PC1: (+1)
+   \        0x0   0xB580             PUSH     {R7,LR}
+     38          	GPIO_InitTypeDef GPIO_InitStructure;
+     39          	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+   \        0x2   0x2002             MOVS     R0,#+2
+   \        0x4   0xF8AD 0x0000      STRH     R0,[SP, #+0]
+     40          	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+   \        0x8   0x2001             MOVS     R0,#+1
+   \        0xA   0xF88D 0x0002      STRB     R0,[SP, #+2]
+     41          	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+   \        0xE   0x2000             MOVS     R0,#+0
+   \       0x10   0xF88D 0x0003      STRB     R0,[SP, #+3]
+     42          	GPIO_Init(GPIOC, &GPIO_InitStructure);
+   \       0x14   0x4669             MOV      R1,SP
+   \       0x16   0x....             LDR.N    R0,??DataTable6_1
+   \       0x18   0x.... 0x....      BL       GPIO_Init
+     43          }
+   \       0x1C   0xBD01             POP      {R0,PC}
+     44          
+
+   \                                 In section .text, align 2, keep-with-next
+     45          void set_NVIC(void) {
+   \                     set_NVIC: (+1)
+   \        0x0   0xB51C             PUSH     {R2-R4,LR}
+     46          	NVIC_InitTypeDef NVIC_InitStructure;
+     47          	NVIC_InitStructure.NVIC_IRQChannel = ADC1_2_IRQn;
+   \        0x2   0x2012             MOVS     R0,#+18
+   \        0x4   0xF88D 0x0000      STRB     R0,[SP, #+0]
+     48          	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+   \        0x8   0x2000             MOVS     R0,#+0
+   \        0xA   0xF88D 0x0001      STRB     R0,[SP, #+1]
+     49          	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+   \        0xE   0x2000             MOVS     R0,#+0
+   \       0x10   0xF88D 0x0002      STRB     R0,[SP, #+2]
+     50          	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+   \       0x14   0x2001             MOVS     R0,#+1
+   \       0x16   0xF88D 0x0003      STRB     R0,[SP, #+3]
+     51          	NVIC_Init(&NVIC_InitStructure);
+   \       0x1A   0x4668             MOV      R0,SP
+   \       0x1C   0x.... 0x....      BL       NVIC_Init
+     52          	ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
+   \       0x20   0x....             LDR.N    R4,??DataTable6_2
+   \       0x22   0x2201             MOVS     R2,#+1
+   \       0x24   0xF44F 0x7108      MOV      R1,#+544
+   \       0x28   0x0020             MOVS     R0,R4
+   \       0x2A   0x.... 0x....      BL       ADC_ITConfig
+     53          	ADC_Cmd(ADC1, ENABLE);
+   \       0x2E   0x2101             MOVS     R1,#+1
+   \       0x30   0x0020             MOVS     R0,R4
+   \       0x32   0x.... 0x....      BL       ADC_Cmd
+     54          }
+   \       0x36   0xBD13             POP      {R0,R1,R4,PC}
+
+   \                                 In section .text, align 2, keep-with-next
+     55          void set_ADC(void) {
+   \                     set_ADC: (+1)
+   \        0x0   0xB518             PUSH     {R3,R4,LR}
+   \        0x2   0xB085             SUB      SP,SP,#+20
+     56          	ADC_InitTypeDef ADC_InitStructure;
+     57          	ADC_DeInit(ADC1);
+   \        0x4   0x....             LDR.N    R4,??DataTable6_2
+   \        0x6   0x0020             MOVS     R0,R4
+   \        0x8   0x.... 0x....      BL       ADC_DeInit
+     58          	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
+   \        0xC   0x2000             MOVS     R0,#+0
+   \        0xE   0x9000             STR      R0,[SP, #+0]
+     59          	ADC_InitStructure.ADC_ScanConvMode = ENABLE;
+   \       0x10   0x2001             MOVS     R0,#+1
+   \       0x12   0xF88D 0x0004      STRB     R0,[SP, #+4]
+     60          	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+   \       0x16   0x2001             MOVS     R0,#+1
+   \       0x18   0xF88D 0x0005      STRB     R0,[SP, #+5]
+     61          	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
+   \       0x1C   0xF45F 0x2060      MOVS     R0,#+917504
+   \       0x20   0x9002             STR      R0,[SP, #+8]
+     62          	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+   \       0x22   0x2000             MOVS     R0,#+0
+   \       0x24   0x9003             STR      R0,[SP, #+12]
+     63          	ADC_InitStructure.ADC_NbrOfChannel = 1;
+   \       0x26   0x2001             MOVS     R0,#+1
+   \       0x28   0xF88D 0x0010      STRB     R0,[SP, #+16]
+     64          	ADC_RegularChannelConfig(ADC1, ADC_Channel_11, 1, ADC_SampleTime_239Cycles5);
+   \       0x2C   0x2307             MOVS     R3,#+7
+   \       0x2E   0x2201             MOVS     R2,#+1
+   \       0x30   0x210B             MOVS     R1,#+11
+   \       0x32   0x0020             MOVS     R0,R4
+   \       0x34   0x.... 0x....      BL       ADC_RegularChannelConfig
+     65          	ADC_Init(ADC1, &ADC_InitStructure);
+   \       0x38   0x4669             MOV      R1,SP
+   \       0x3A   0x0020             MOVS     R0,R4
+   \       0x3C   0x.... 0x....      BL       ADC_Init
+     66          }
+   \       0x40   0xB006             ADD      SP,SP,#+24
+   \       0x42   0xBD10             POP      {R4,PC}
+
+   \                                 In section .text, align 2, keep-with-next
+     67          void ADC_start(void) {
+   \                     ADC_start: (+1)
+   \        0x0   0xB510             PUSH     {R4,LR}
+     68          	ADC_ResetCalibration(ADC1);
+   \        0x2   0x....             LDR.N    R4,??DataTable6_2
+   \        0x4   0x0020             MOVS     R0,R4
+   \        0x6   0x.... 0x....      BL       ADC_ResetCalibration
+     69          	while(ADC_GetResetCalibrationStatus(ADC1));
+   \                     ??ADC_start_0: (+1)
+   \        0xA   0x0020             MOVS     R0,R4
+   \        0xC   0x.... 0x....      BL       ADC_GetResetCalibrationStatus
+   \       0x10   0x2800             CMP      R0,#+0
+   \       0x12   0xD1FA             BNE.N    ??ADC_start_0
+     70          	ADC_StartCalibration(ADC1);
+   \       0x14   0x0020             MOVS     R0,R4
+   \       0x16   0x.... 0x....      BL       ADC_StartCalibration
+     71          	while(ADC_GetCalibrationStatus(ADC1));
+   \                     ??ADC_start_1: (+1)
+   \       0x1A   0x0020             MOVS     R0,R4
+   \       0x1C   0x.... 0x....      BL       ADC_GetCalibrationStatus
+   \       0x20   0x2800             CMP      R0,#+0
+   \       0x22   0xD1FA             BNE.N    ??ADC_start_1
+     72          	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+   \       0x24   0x2101             MOVS     R1,#+1
+   \       0x26   0x0020             MOVS     R0,R4
+   \       0x28   0x.... 0x....      BL       ADC_SoftwareStartConvCmd
+     73          }
+   \       0x2C   0xBD10             POP      {R4,PC}
+     74          
+     75          
+     76          
+
+   \                                 In section .text, align 2, keep-with-next
+     77          void ADC1_2_IRQHandler(void) {
+   \                     ADC1_2_IRQHandler: (+1)
+   \        0x0   0xB510             PUSH     {R4,LR}
+     78          	uint16_t input;
+     79          	u8 str[10];
+     80          	double result;
+     81          //
+     82          ////	while(ADC_GetFlagStatus(ADC1, 0x2)==RESET);
+     83          	input = ADC_GetConversionValue(ADC1);
+   \        0x2   0x....             LDR.N    R4,??DataTable6_2
+   \        0x4   0x0020             MOVS     R0,R4
+   \        0x6   0x.... 0x....      BL       ADC_GetConversionValue
+     84          	result = (double)input;
+   \        0xA   0xB280             UXTH     R0,R0
+   \        0xC   0x.... 0x....      BL       __aeabi_ui2d
+     85          	jodo = result;
+                 	     ^
+Warning[Pa093]: implicit conversion from floating point to integer
+
+  	u8 str[10];
+  	   ^
+"C:\Users\NAINSOO\Desktop\programming\project_test\user\main.c",79  Warning[Pe177]: 
+          variable "str" was declared but never referenced
+   \       0x10   0x.... 0x....      BL       __aeabi_d2iz
+   \       0x14   0x....             LDR.N    R1,??DataTable6_3
+   \       0x16   0x8008             STRH     R0,[R1, #+0]
+     86          	ADC_ClearITPendingBit(ADC1,ADC_IT_EOC);
+   \       0x18   0xF44F 0x7108      MOV      R1,#+544
+   \       0x1C   0x0020             MOVS     R0,R4
+   \       0x1E   0x.... 0x....      BL       ADC_ClearITPendingBit
+     87          	//	LCD_DrawRectangle(pix_x, pix_y, pix_x+10, pix_y+10);
+     88          }
+   \       0x22   0xBD10             POP      {R4,PC}
+     89          
+     90          
+     91          #include <ws2812b.h>
+     92          
+     93          #define NUM_LEDS    12
+     94          
+
+   \                                 In section .bss, align 4
+     95          RGB_t leds[NUM_LEDS];
+   \                     leds:
+   \        0x0                      DS8 36
+     96          
+
+   \                                 In section .text, align 2, keep-with-next
+     97          int main() {
+   \                     main: (+1)
+   \        0x0   0xB53E             PUSH     {R1-R5,LR}
+     98              ws2812b_Init();
+   \        0x2   0x.... 0x....      BL       ws2812b_Init
+     99              SystemInit();
+   \        0x6   0x.... 0x....      BL       SystemInit
+    100              set_ENABLE();
+   \        0xA   0x.... 0x....      BL       set_ENABLE
+    101              set_PC1();
+   \        0xE   0x.... 0x....      BL       set_PC1
+    102              set_ADC();
+   \       0x12   0x.... 0x....      BL       set_ADC
+    103              set_NVIC();
+   \       0x16   0x.... 0x....      BL       set_NVIC
+    104              ADC_start();
+   \       0x1A   0x.... 0x....      BL       ADC_start
+    105              LCD_Init();
+   \       0x1E   0x.... 0x....      BL       LCD_Init
+    106              LCD_Clear(WHITE);
+   \       0x22   0xF64F 0x74FF      MOVW     R4,#+65535
+   \       0x26   0x0020             MOVS     R0,R4
+   \       0x28   0x.... 0x....      BL       LCD_Clear
+   \       0x2C   0xE003             B.N      ??main_0
+    107          
+    108              while (1) {
+    109                 // while (!ws2812b_IsReady()); // wait
+    110          
+    111                  //
+    112                  // Fill leds buffer
+    113                  //
+    114                
+    115                  LCD_ShowNum(1, 200, jodo, 4, BLACK, WHITE);
+    116                  LCD_ShowString(1, 1, "Wed_team07", BLACK, WHITE);
+    117                      
+    118                 
+    119                  
+    120                  if (jodo >500)
+    121                  {
+    122                    for(int i=0;i<NUM_LEDS;i++){
+    123                      if(i %2 ==0){
+    124                      leds[i].b = 255;
+    125                      leds[i].g = 0;
+    126                      leds[i].r = 255;
+    127                      }
+    128                    else{
+    129                      leds[i].b = 0;
+    130                      leds[i].g = 255;
+    131                      leds[i].r = 255;
+    132                    
+    133                    }
+    134                  }
+    135                  
+    136                       ws2812b_SendRGB(leds, NUM_LEDS);
+   \                     ??main_1: (+1)
+   \       0x2E   0x210C             MOVS     R1,#+12
+   \       0x30   0x....             LDR.N    R0,??DataTable6_4
+   \       0x32   0x.... 0x....      BL       ws2812b_SendRGB
+   \                     ??main_0: (+1)
+   \       0x36   0x....             LDR.N    R5,??DataTable6_3
+   \       0x38   0x0020             MOVS     R0,R4
+   \       0x3A   0x9001             STR      R0,[SP, #+4]
+   \       0x3C   0x2000             MOVS     R0,#+0
+   \       0x3E   0x9000             STR      R0,[SP, #+0]
+   \       0x40   0x2304             MOVS     R3,#+4
+   \       0x42   0x882A             LDRH     R2,[R5, #+0]
+   \       0x44   0x21C8             MOVS     R1,#+200
+   \       0x46   0x2001             MOVS     R0,#+1
+   \       0x48   0x.... 0x....      BL       LCD_ShowNum
+   \       0x4C   0x0020             MOVS     R0,R4
+   \       0x4E   0x9000             STR      R0,[SP, #+0]
+   \       0x50   0x2300             MOVS     R3,#+0
+   \       0x52   0x....             LDR.N    R2,??DataTable6_5
+   \       0x54   0x2101             MOVS     R1,#+1
+   \       0x56   0x2001             MOVS     R0,#+1
+   \       0x58   0x.... 0x....      BL       LCD_ShowString
+   \       0x5C   0x8828             LDRH     R0,[R5, #+0]
+   \       0x5E   0xF240 0x11F5      MOVW     R1,#+501
+   \       0x62   0x4288             CMP      R0,R1
+   \       0x64   0xDB2A             BLT.N    ??main_2
+   \       0x66   0x2000             MOVS     R0,#+0
+   \       0x68   0xE011             B.N      ??main_3
+   \                     ??main_4: (+1)
+   \       0x6A   0x....             LDR.N    R1,??DataTable6_4
+   \       0x6C   0x2200             MOVS     R2,#+0
+   \       0x6E   0x2303             MOVS     R3,#+3
+   \       0x70   0xFB03 0xF300      MUL      R3,R3,R0
+   \       0x74   0x440B             ADD      R3,R1,R3
+   \       0x76   0x709A             STRB     R2,[R3, #+2]
+   \       0x78   0x22FF             MOVS     R2,#+255
+   \       0x7A   0x2303             MOVS     R3,#+3
+   \       0x7C   0xFB03 0xF300      MUL      R3,R3,R0
+   \       0x80   0x440B             ADD      R3,R1,R3
+   \       0x82   0x705A             STRB     R2,[R3, #+1]
+   \       0x84   0x2303             MOVS     R3,#+3
+   \       0x86   0xFB03 0xF300      MUL      R3,R3,R0
+   \       0x8A   0x54CA             STRB     R2,[R1, R3]
+   \       0x8C   0xE014             B.N      ??main_5
+   \                     ??main_3: (+1)
+   \       0x8E   0x280C             CMP      R0,#+12
+   \       0x90   0xDACD             BGE.N    ??main_1
+   \       0x92   0x07C1             LSLS     R1,R0,#+31
+   \       0x94   0xD4E9             BMI.N    ??main_4
+   \       0x96   0x....             LDR.N    R1,??DataTable6_4
+   \       0x98   0x22FF             MOVS     R2,#+255
+   \       0x9A   0x2303             MOVS     R3,#+3
+   \       0x9C   0xFB03 0xF300      MUL      R3,R3,R0
+   \       0xA0   0x440B             ADD      R3,R1,R3
+   \       0xA2   0x709A             STRB     R2,[R3, #+2]
+   \       0xA4   0x2300             MOVS     R3,#+0
+   \       0xA6   0x2503             MOVS     R5,#+3
+   \       0xA8   0xFB05 0xF500      MUL      R5,R5,R0
+   \       0xAC   0x440D             ADD      R5,R1,R5
+   \       0xAE   0x706B             STRB     R3,[R5, #+1]
+   \       0xB0   0x2303             MOVS     R3,#+3
+   \       0xB2   0xFB03 0xF300      MUL      R3,R3,R0
+   \       0xB6   0x54CA             STRB     R2,[R1, R3]
+   \                     ??main_5: (+1)
+   \       0xB8   0x1C40             ADDS     R0,R0,#+1
+   \       0xBA   0xE7E8             B.N      ??main_3
+    137                  }
+    138                  else{
+    139                    for(int i=0;i<NUM_LEDS;i++){
+   \                     ??main_2: (+1)
+   \       0xBC   0x2000             MOVS     R0,#+0
+   \       0xBE   0xE025             B.N      ??main_6
+    140                      if(i %2 ==0){
+    141                      leds[i].b = 255;
+    142                      leds[i].g = 250;
+    143                      leds[i].r = 255;
+    144                      }
+    145                    else{
+    146                      leds[i].b = 250;
+   \                     ??main_7: (+1)
+   \       0xC0   0x....             LDR.N    R1,??DataTable6_4
+   \       0xC2   0x22FA             MOVS     R2,#+250
+   \       0xC4   0x2303             MOVS     R3,#+3
+   \       0xC6   0xFB03 0xF300      MUL      R3,R3,R0
+   \       0xCA   0x440B             ADD      R3,R1,R3
+   \       0xCC   0x709A             STRB     R2,[R3, #+2]
+    147                      leds[i].g = 255;
+   \       0xCE   0x22FF             MOVS     R2,#+255
+   \       0xD0   0x2303             MOVS     R3,#+3
+   \       0xD2   0xFB03 0xF300      MUL      R3,R3,R0
+   \       0xD6   0x440B             ADD      R3,R1,R3
+   \       0xD8   0x705A             STRB     R2,[R3, #+1]
+    148                      leds[i].r = 255;
+   \       0xDA   0x2303             MOVS     R3,#+3
+   \       0xDC   0xFB03 0xF300      MUL      R3,R3,R0
+   \       0xE0   0x54CA             STRB     R2,[R1, R3]
+   \       0xE2   0xE012             B.N      ??main_8
+    149                    
+    150                    }
+   \                     ??main_9: (+1)
+   \       0xE4   0x07C1             LSLS     R1,R0,#+31
+   \       0xE6   0xD4EB             BMI.N    ??main_7
+   \       0xE8   0x....             LDR.N    R1,??DataTable6_4
+   \       0xEA   0x22FF             MOVS     R2,#+255
+   \       0xEC   0x2303             MOVS     R3,#+3
+   \       0xEE   0xFB03 0xF300      MUL      R3,R3,R0
+   \       0xF2   0x440B             ADD      R3,R1,R3
+   \       0xF4   0x709A             STRB     R2,[R3, #+2]
+   \       0xF6   0x23FA             MOVS     R3,#+250
+   \       0xF8   0x2503             MOVS     R5,#+3
+   \       0xFA   0xFB05 0xF500      MUL      R5,R5,R0
+   \       0xFE   0x440D             ADD      R5,R1,R5
+   \      0x100   0x706B             STRB     R3,[R5, #+1]
+   \      0x102   0x2303             MOVS     R3,#+3
+   \      0x104   0xFB03 0xF300      MUL      R3,R3,R0
+   \      0x108   0x54CA             STRB     R2,[R1, R3]
+    151                  }
+   \                     ??main_8: (+1)
+   \      0x10A   0x1C40             ADDS     R0,R0,#+1
+   \                     ??main_6: (+1)
+   \      0x10C   0x280C             CMP      R0,#+12
+   \      0x10E   0xDBE9             BLT.N    ??main_9
+    152                   ws2812b_SendRGB(leds, NUM_LEDS);
+   \                     ??main_10: (+1)
+   \      0x110   0x210C             MOVS     R1,#+12
+   \      0x112   0x....             LDR.N    R0,??DataTable6_4
+   \      0x114   0x.... 0x....      BL       ws2812b_SendRGB
+   \      0x118   0xE78D             B.N      ??main_0
+    153              }
+    154              
+    155              
+    156              
+    157              }
+    158          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6:
+   \        0x0   0x0001'86A0        DC32     0x186a0
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_1:
+   \        0x0   0x4001'1000        DC32     0x40011000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_2:
+   \        0x0   0x4001'2400        DC32     0x40012400
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_3:
+   \        0x0   0x....'....        DC32     jodo
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_4:
+   \        0x0   0x....'....        DC32     leds
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_5:
+   \        0x0   0x....'....        DC32     ?_0
+
+   \                                 In section .rodata, align 4
+   \                     ?_0:
+   \        0x0   0x57 0x65          DC8 "Wed_team07"
+
+   \              0x64 0x5F    
+
+   \              0x74 0x65    
+
+   \              0x61 0x6D    
+
+   \              0x30 0x37    
+
+   \              0x00
+   \        0xB                      DS8 1
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   ADC1_2_IRQHandler
+         8   -> ADC_ClearITPendingBit
+         8   -> ADC_GetConversionValue
+         8   -> __aeabi_d2iz
+         8   -> __aeabi_ui2d
+       8   ADC_start
+         8   -> ADC_GetCalibrationStatus
+         8   -> ADC_GetResetCalibrationStatus
+         8   -> ADC_ResetCalibration
+         8   -> ADC_SoftwareStartConvCmd
+         8   -> ADC_StartCalibration
+       0   delay
+      24   main
+        24   -> ADC_start
+        24   -> LCD_Clear
+        24   -> LCD_Init
+        24   -> LCD_ShowNum
+        24   -> LCD_ShowString
+        24   -> SystemInit
+        24   -> set_ADC
+        24   -> set_ENABLE
+        24   -> set_NVIC
+        24   -> set_PC1
+        24   -> ws2812b_Init
+        24   -> ws2812b_SendRGB
+      32   set_ADC
+        32   -> ADC_DeInit
+        32   -> ADC_Init
+        32   -> ADC_RegularChannelConfig
+       8   set_ENABLE
+         8   -> RCC_APB2PeriphClockCmd
+      16   set_NVIC
+        16   -> ADC_Cmd
+        16   -> ADC_ITConfig
+        16   -> NVIC_Init
+       8   set_PC1
+         8   -> GPIO_Init
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable6
+       4  ??DataTable6_1
+       4  ??DataTable6_2
+       4  ??DataTable6_3
+       4  ??DataTable6_4
+       4  ??DataTable6_5
+      12  ?_0
+      36  ADC1_2_IRQHandler
+      46  ADC_start
+      18  delay
+       4  j
+       2  jodo
+      36  leds
+     282  main
+      68  set_ADC
+      46  set_ENABLE
+      56  set_NVIC
+      30  set_PC1
+       4  t
+
+ 
+  42 bytes in section .bss
+   4 bytes in section .data
+  12 bytes in section .rodata
+ 606 bytes in section .text
+ 
+ 606 bytes of CODE  memory
+  12 bytes of CONST memory
+  46 bytes of DATA  memory
+
+Errors: none
+Warnings: 2

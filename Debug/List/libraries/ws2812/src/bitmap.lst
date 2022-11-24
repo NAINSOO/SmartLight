@@ -1,0 +1,267 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V9.30.1.335/W64 for ARM         18/Nov/2022  15:19:35
+# Copyright 1999-2022 IAR Systems AB.
+#
+#    Cpu mode          =  thumb
+#    Endian            =  little
+#    Source file       =
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Libraries\ws2812\src\bitmap.c
+#    Command line      =
+#        -f
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\Obj\libraries\ws2812\src\bitmap.o.rsp
+#        (C:\Users\NAINSOO\Desktop\programming\project_test\Libraries\ws2812\src\bitmap.c
+#        -D USE_STDPERIPH_DRIVER -D STM32F10X_CL -lC
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\List\libraries\ws2812\src
+#        -o
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\Obj\libraries\ws2812\src
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program Files\IAR
+#        Systems\Embedded Workbench 9.1\arm\inc\c\DLib_Config_Normal.h" -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\CMSIS\DeviceSupport\
+#        -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\CMSIS\DeviceSupport\Startup\
+#        -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\inc\
+#        -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\src\
+#        -I C:\Users\NAINSOO\Desktop\programming\project_test\user\ -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\LCD\ -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\user\inc\ -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\ws2812\inc\
+#        -I
+#        C:\Users\NAINSOO\Desktop\programming\project_test\libraries\ws2812\src\
+#        -Ol -I "C:\Program Files\IAR Systems\Embedded Workbench
+#        9.1\arm\CMSIS\Core\Include\\") --dependencies=n
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\Obj\libraries\ws2812\src\bitmap.o.d
+#    Locale            =  C
+#    List file         =
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\List\libraries\ws2812\src\bitmap.lst
+#    Object file       =
+#        C:\Users\NAINSOO\Desktop\programming\project_test\Debug\Obj\libraries\ws2812\src\bitmap.o
+#    Runtime model:       
+#      __CPP_Runtime   =  1
+#      __SystemLibrary =  DLib
+#      __dlib_version  =  6
+#      __size_limit    =  32768|ARM.EW.LINKER
+#
+###############################################################################
+
+C:\Users\NAINSOO\Desktop\programming\project_test\Libraries\ws2812\src\bitmap.c
+      1          // The MIT License (MIT)
+      2          //
+      3          // Copyright (c) 2015 Aleksandr Aleshin <silencer@quadrius.net>
+      4          //
+      5          // Permission is hereby granted, free of charge, to any person obtaining a copy
+      6          // of this software and associated documentation files (the "Software"), to deal
+      7          // in the Software without restriction, including without limitation the rights
+      8          // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      9          // copies of the Software, and to permit persons to whom the Software is
+     10          // furnished to do so, subject to the following conditions:
+     11          //
+     12          // The above copyright notice and this permission notice shall be included in all
+     13          // copies or substantial portions of the Software.
+     14          //
+     15          // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+     16          // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+     17          // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+     18          // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+     19          // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+     20          // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+     21          // SOFTWARE.
+     22          
+     23          #include <stdint.h>
+     24          
+     25          #include "bitmap.h"
+     26          
+
+   \                                 In section .text, align 2, keep-with-next
+     27          void HSV2RGB(HSV_t *hsv, RGB_t *rgb)
+     28          {
+   \                     HSV2RGB: (+1)
+   \        0x0   0xB430             PUSH     {R4,R5}
+     29              if (!hsv->v)
+   \        0x2   0x78C2             LDRB     R2,[R0, #+3]
+   \        0x4   0x2A00             CMP      R2,#+0
+   \        0x6   0xD104             BNE.N    ??HSV2RGB_0
+     30              {
+     31                  rgb->r = rgb->g = rgb->b = 0;
+   \        0x8   0x2000             MOVS     R0,#+0
+   \        0xA   0x7088             STRB     R0,[R1, #+2]
+   \        0xC   0x7048             STRB     R0,[R1, #+1]
+   \        0xE   0x7008             STRB     R0,[R1, #+0]
+   \       0x10   0xE05B             B.N      ??HSV2RGB_1
+     32              }
+     33              else if (!hsv->s)
+   \                     ??HSV2RGB_0: (+1)
+   \       0x12   0x7882             LDRB     R2,[R0, #+2]
+   \       0x14   0x2A00             CMP      R2,#+0
+   \       0x16   0xD104             BNE.N    ??HSV2RGB_2
+     34              {
+     35                  rgb->r = rgb->g = rgb->b = hsv->v;
+   \       0x18   0x78C0             LDRB     R0,[R0, #+3]
+   \       0x1A   0x7088             STRB     R0,[R1, #+2]
+   \       0x1C   0x7048             STRB     R0,[R1, #+1]
+   \       0x1E   0x7008             STRB     R0,[R1, #+0]
+   \       0x20   0xE053             B.N      ??HSV2RGB_1
+     36              }
+     37              else
+     38              {
+     39                  int hue = HUE(hsv->h);
+   \                     ??HSV2RGB_2: (+1)
+   \       0x22   0xF9B0 0x3000      LDRSH    R3,[R0, #+0]
+   \       0x26   0xF44F 0x74B4      MOV      R4,#+360
+   \       0x2A   0xFB93 0xF2F4      SDIV     R2,R3,R4
+   \       0x2E   0xFB04 0x3212      MLS      R2,R4,R2,R3
+   \       0x32   0x0013             MOVS     R3,R2
+   \       0x34   0xB21B             SXTH     R3,R3
+   \       0x36   0x2B00             CMP      R3,#+0
+   \       0x38   0xD503             BPL.N    ??HSV2RGB_3
+   \       0x3A   0xB212             SXTH     R2,R2
+   \       0x3C   0xF512 0x72B4      ADDS     R2,R2,#+360
+   \       0x40   0xE000             B.N      ??HSV2RGB_4
+   \                     ??HSV2RGB_3: (+1)
+   \       0x42   0xB212             SXTH     R2,R2
+     40          
+     41                  int sector = hue / 60;
+   \                     ??HSV2RGB_4: (+1)
+   \       0x44   0x233C             MOVS     R3,#+60
+   \       0x46   0xFB92 0xF3F3      SDIV     R3,R2,R3
+     42                  int angle = sector & 1 ? 60 - hue % 60 : hue % 60;
+   \       0x4A   0x07DC             LSLS     R4,R3,#+31
+   \       0x4C   0xD507             BPL.N    ??HSV2RGB_5
+   \       0x4E   0x243C             MOVS     R4,#+60
+   \       0x50   0xF1D2 0x053C      RSBS     R5,R2,#+60
+   \       0x54   0xFB92 0xF2F4      SDIV     R2,R2,R4
+   \       0x58   0xFB04 0x5202      MLA      R2,R4,R2,R5
+   \       0x5C   0xE004             B.N      ??HSV2RGB_6
+   \                     ??HSV2RGB_5: (+1)
+   \       0x5E   0x243C             MOVS     R4,#+60
+   \       0x60   0xFB92 0xF5F4      SDIV     R5,R2,R4
+   \       0x64   0xFB04 0x2215      MLS      R2,R4,R5,R2
+     43          
+     44                  int high = hsv->v;
+   \                     ??HSV2RGB_6: (+1)
+   \       0x68   0x78C4             LDRB     R4,[R0, #+3]
+     45                  int low = (255 - hsv->s) * high / 255;
+   \       0x6A   0x7880             LDRB     R0,[R0, #+2]
+   \       0x6C   0xF1D0 0x00FF      RSBS     R0,R0,#+255
+   \       0x70   0x4360             MULS     R0,R4,R0
+   \       0x72   0x25FF             MOVS     R5,#+255
+   \       0x74   0xFB90 0xF0F5      SDIV     R0,R0,R5
+     46                  int middle = low + (high - low) * angle / 60;
+   \       0x78   0x1A25             SUBS     R5,R4,R0
+   \       0x7A   0xFB02 0xF205      MUL      R2,R2,R5
+   \       0x7E   0x253C             MOVS     R5,#+60
+   \       0x80   0xFB92 0xF2F5      SDIV     R2,R2,R5
+   \       0x84   0x1812             ADDS     R2,R2,R0
+     47          
+     48                  switch (sector)
+   \       0x86   0x2B00             CMP      R3,#+0
+   \       0x88   0xD008             BEQ.N    ??HSV2RGB_7
+   \       0x8A   0x2B02             CMP      R3,#+2
+   \       0x8C   0xD00E             BEQ.N    ??HSV2RGB_8
+   \       0x8E   0xD309             BCC.N    ??HSV2RGB_9
+   \       0x90   0x2B04             CMP      R3,#+4
+   \       0x92   0xD013             BEQ.N    ??HSV2RGB_10
+   \       0x94   0xD30E             BCC.N    ??HSV2RGB_11
+   \       0x96   0x2B05             CMP      R3,#+5
+   \       0x98   0xD014             BEQ.N    ??HSV2RGB_12
+   \       0x9A   0xE016             B.N      ??HSV2RGB_1
+     49                  {
+     50                  case 0: // red -> yellow
+     51                      rgb->r = high;
+   \                     ??HSV2RGB_7: (+1)
+   \       0x9C   0x700C             STRB     R4,[R1, #+0]
+     52                      rgb->g = middle;
+   \       0x9E   0x704A             STRB     R2,[R1, #+1]
+     53                      rgb->b = low;
+   \       0xA0   0x7088             STRB     R0,[R1, #+2]
+     54          
+     55                      break;
+   \       0xA2   0xE012             B.N      ??HSV2RGB_1
+     56          
+     57                  case 1: // yellow -> green
+     58                      rgb->r = middle;
+   \                     ??HSV2RGB_9: (+1)
+   \       0xA4   0x700A             STRB     R2,[R1, #+0]
+     59                      rgb->g = high;
+   \       0xA6   0x704C             STRB     R4,[R1, #+1]
+     60                      rgb->b = low;
+   \       0xA8   0x7088             STRB     R0,[R1, #+2]
+     61          
+     62                      break;
+   \       0xAA   0xE00E             B.N      ??HSV2RGB_1
+     63          
+     64                  case 2: // green -> cyan
+     65                      rgb->r = low;
+   \                     ??HSV2RGB_8: (+1)
+   \       0xAC   0x7008             STRB     R0,[R1, #+0]
+     66                      rgb->g = high;
+   \       0xAE   0x704C             STRB     R4,[R1, #+1]
+     67                      rgb->b = middle;
+   \       0xB0   0x708A             STRB     R2,[R1, #+2]
+     68          
+     69                      break;
+   \       0xB2   0xE00A             B.N      ??HSV2RGB_1
+     70          
+     71                  case 3: // cyan -> blue
+     72                      rgb->r = low;
+   \                     ??HSV2RGB_11: (+1)
+   \       0xB4   0x7008             STRB     R0,[R1, #+0]
+     73                      rgb->g = middle;
+   \       0xB6   0x704A             STRB     R2,[R1, #+1]
+     74                      rgb->b = high;
+   \       0xB8   0x708C             STRB     R4,[R1, #+2]
+     75          
+     76                      break;
+   \       0xBA   0xE006             B.N      ??HSV2RGB_1
+     77          
+     78                  case 4: // blue -> magenta
+     79                      rgb->r = middle;
+   \                     ??HSV2RGB_10: (+1)
+   \       0xBC   0x700A             STRB     R2,[R1, #+0]
+     80                      rgb->g = low;
+   \       0xBE   0x7048             STRB     R0,[R1, #+1]
+     81                      rgb->b = high;
+   \       0xC0   0x708C             STRB     R4,[R1, #+2]
+     82          
+     83                      break;
+   \       0xC2   0xE002             B.N      ??HSV2RGB_1
+     84          
+     85                  case 5: // magenta -> red
+     86                      rgb->r = high;
+   \                     ??HSV2RGB_12: (+1)
+   \       0xC4   0x700C             STRB     R4,[R1, #+0]
+     87                      rgb->g = low;
+   \       0xC6   0x7048             STRB     R0,[R1, #+1]
+     88                      rgb->b = middle;
+   \       0xC8   0x708A             STRB     R2,[R1, #+2]
+     89                  }
+     90              }
+     91          }
+   \                     ??HSV2RGB_1: (+1)
+   \       0xCA   0xBC30             POP      {R4,R5}
+   \       0xCC   0x4770             BX       LR
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   HSV2RGB
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+     206  HSV2RGB
+
+ 
+ 206 bytes in section .text
+ 
+ 206 bytes of CODE memory
+
+Errors: none
+Warnings: none
