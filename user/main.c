@@ -16,6 +16,13 @@ void GPIO_Configure(void);
 void EXTI_Configure(void);
 void NVIC_Configure(void);
 
+
+#include <ws2812b.h>
+
+#define NUM_LEDS    12
+
+RGB_t leds[NUM_LEDS];
+
 //---------------------------------------------------------------------------------------------------
 
 uint16_t jodo;
@@ -186,40 +193,76 @@ uint16_t word;
     }
 }
 
-char msg[100];
-uint8_t mych='b';
-
+int rgb_count = 0;
+unsigned char  RGB_array[4]; 
+uint16_t test00 ;
 void USART2_IRQHandler(void) {
   uint16_t word;
 
        if(USART_GetITStatus(USART2,USART_IT_RXNE)!=RESET){
           word =  USART_ReceiveData(USART2);
           USART_SendData(USART1, word);
+          test00 = word;
+          RGB_array[rgb_count] =  (unsigned char) word;
           
-          if(word == 'a'){
-            mych = 'a';
-          }
-          else if(word == 'b'){
-            mych = 'b';
-          }
+          rgb_count = (rgb_count+1) % 4;
           USART_ClearITPendingBit(USART2, USART_IT_RXNE);
       
        }
 }
 
+int darkness = 0;
+
+int scopeValue(int num){
+  if(num <0 ){
+    num = 0;
+  }
+  if(num>255){
+    num = 255;
+  }
+  
+  return num;
+  
+}
+
+void turnLED(){
+      unsigned char  temp_array[4]; 
+      for(int i= 0;i<4;i++){
+        temp_array[i] = RGB_array[i];
+      }
+     
+      if( temp_array[3] == 0){
+        for(int i=0;i<NUM_LEDS;i++){    
+              leds[i].r = 255 ;
+              leds[i].g =255 ;
+              leds[i].b = 255 ;
+        }
+         ws2812b_SendRGB(leds, NUM_LEDS);
+
+         return;
+      }
+     
+    while (!ws2812b_IsReady())  ;  // wait
+          int brightness = 255- temp_array[3];
+          for(int i=0;i<NUM_LEDS;i++){    
+            leds[i].r = scopeValue(((255 - temp_array[0]) ) +brightness+ darkness)  ;
+            leds[i].g =scopeValue( ((255 - temp_array[1])) + brightness+ darkness); 
+            leds[i].b = scopeValue(((255 - temp_array[2]) ) + brightness+ darkness);
+          }
+        
+     
+    ws2812b_SendRGB(leds, NUM_LEDS);
+}
+        
 
 
-#include <ws2812b.h>
 
-#define NUM_LEDS    12
-
-RGB_t leds[NUM_LEDS];
 
 
 void Delay(void) {
 int i;
 
-for (i = 0; i < 2000000; i++) {}
+for (i = 0; i < 20000000; i++) {}
 }
 
 int flag_a= 0;
@@ -235,74 +278,37 @@ int main() {
    ADC_start();
    LCD_Init();
    LCD_Clear(WHITE);   
-    USART1_Init();
+  //USART1_Init();
     USART2_Init();
 
     while (1) {
-       // while (!ws2812b_IsReady()); // wait
-
+  
         //
         // Fill leds buffer
         //
       
-        LCD_ShowNum(1, 200, jodo, 4, BLACK, WHITE);
-        LCD_ShowString(1, 1, "Wed_team07", BLACK, WHITE);
-          
-        if(mych == 'a'){
-          if(flag_a ==0){
-            LCD_Clear(WHITE);   
-            flag_a =1;
-            flag_b = 0;
-          }
-          LCD_ShowNum(1, 200, jodo, 4, BLACK, WHITE);
-          LCD_ShowString(1, 1, "Wed_team07", BLACK, WHITE);
-        }
-        else if(mych == 'b'){
-          if(flag_b ==0){
-            LCD_Clear(GRAY);
-            flag_b = 1;
-            flag_a = 0;
-          }
-          LCD_ShowNum(1, 200, jodo, 4, WHITE, GRAY);
-          LCD_ShowString(1, 1, "Wed_team07", WHITE, GRAY);
-        }
+           LCD_ShowNum(200, 1, test00, 4, BLACK, WHITE);
+            LCD_ShowNum(200, 30, RGB_array[0], 4,BLACK, WHITE);
+            LCD_ShowNum(200, 60, RGB_array[1],4, BLACK, WHITE);
+            LCD_ShowNum(200, 90, RGB_array[2],4, BLACK, WHITE);
 
-        
-        if (jodo >500)
-        {
-          for(int i=0;i<NUM_LEDS;i++){
-            if(i %2 ==0){
-            leds[i].b = 255;
-            leds[i].g = 0;
-            leds[i].r = 255;
-            }
-          else{
-            leds[i].b = 0;
-            leds[i].g = 255;
-            leds[i].r = 255;
+           turnLED();
           
-          }
-        }
-        
-             ws2812b_SendRGB(leds, NUM_LEDS);
-        }
-        else{
-          for(int i=0;i<NUM_LEDS;i++){
-            if(i %2 ==0){
-            leds[i].b = 255;
-            leds[i].g = 250;
-            leds[i].r = 255;
-            }
-          else{
-            leds[i].b = 250;
-            leds[i].g = 255;
-            leds[i].r = 255;
-          
-          }
-        }
-         ws2812b_SendRGB(leds, NUM_LEDS);
-    }
+           
+           
+           if (jodo <500){
+             darkness = 0;
+             
+           }else if (jodo<900){
+             darkness = 90;
+             
+           }else{
+             darkness = 190;
+           }
+           
+           
     
     
     }
 }
+
