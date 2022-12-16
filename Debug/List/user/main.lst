@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR ANSI C/C++ Compiler V9.30.1.335/W64 for ARM         01/Dec/2022  01:09:42
+# IAR ANSI C/C++ Compiler V9.30.1.335/W64 for ARM         07/Dec/2022  22:01:57
 # Copyright 1999-2022 IAR Systems AB.
 #
 #    Cpu mode                     =  thumb
@@ -378,75 +378,75 @@ Warning[Pa093]: implicit conversion from floating point to integer
    \       0x1C   0x2018             MOVS     R0,#+24
    \       0x1E   0xF88D 0x0003      STRB     R0,[SP, #+3]
     127            GPIO_Init(GPIOA, &gpioa_init_struct);
-   \       0x22   0x....             LDR.N    R4,??DataTable13_5
-   \       0x24   0x4669             MOV      R1,SP
-   \       0x26   0x0020             MOVS     R0,R4
-   \       0x28   0x.... 0x....      BL       GPIO_Init
+   \       0x22   0x.... 0x....      LDR.W    R4,??DataTable13_5
+   \       0x26   0x4669             MOV      R1,SP
+   \       0x28   0x0020             MOVS     R0,R4
+   \       0x2A   0x.... 0x....      BL       GPIO_Init
     128            gpioa_init_struct.GPIO_Pin = GPIO_Pin_10;
-   \       0x2C   0xF44F 0x6080      MOV      R0,#+1024
-   \       0x30   0xF8AD 0x0000      STRH     R0,[SP, #+0]
+   \       0x2E   0xF44F 0x6080      MOV      R0,#+1024
+   \       0x32   0xF8AD 0x0000      STRH     R0,[SP, #+0]
     129            gpioa_init_struct.GPIO_Speed = GPIO_Speed_50MHz;
-   \       0x34   0x2003             MOVS     R0,#+3
-   \       0x36   0xF88D 0x0002      STRB     R0,[SP, #+2]
+   \       0x36   0x2003             MOVS     R0,#+3
+   \       0x38   0xF88D 0x0002      STRB     R0,[SP, #+2]
     130            gpioa_init_struct.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-   \       0x3A   0x2004             MOVS     R0,#+4
-   \       0x3C   0xF88D 0x0003      STRB     R0,[SP, #+3]
+   \       0x3C   0x2004             MOVS     R0,#+4
+   \       0x3E   0xF88D 0x0003      STRB     R0,[SP, #+3]
     131            GPIO_Init(GPIOA, &gpioa_init_struct);
-   \       0x40   0x4669             MOV      R1,SP
-   \       0x42   0x0020             MOVS     R0,R4
-   \       0x44   0x.... 0x....      BL       GPIO_Init
+   \       0x42   0x4669             MOV      R1,SP
+   \       0x44   0x0020             MOVS     R0,R4
+   \       0x46   0x.... 0x....      BL       GPIO_Init
     132          
     133            usart1_init_struct.USART_BaudRate = 9600;
-   \       0x48   0xF44F 0x5016      MOV      R0,#+9600
-   \       0x4C   0x9002             STR      R0,[SP, #+8]
+   \       0x4A   0xF44F 0x5016      MOV      R0,#+9600
+   \       0x4E   0x9002             STR      R0,[SP, #+8]
     134            usart1_init_struct.USART_WordLength = USART_WordLength_8b;
-   \       0x4E   0x2000             MOVS     R0,#+0
-   \       0x50   0xF8AD 0x000C      STRH     R0,[SP, #+12]
+   \       0x50   0x2000             MOVS     R0,#+0
+   \       0x52   0xF8AD 0x000C      STRH     R0,[SP, #+12]
     135            usart1_init_struct.USART_StopBits = USART_StopBits_1;
-   \       0x54   0x2000             MOVS     R0,#+0
-   \       0x56   0xF8AD 0x000E      STRH     R0,[SP, #+14]
+   \       0x56   0x2000             MOVS     R0,#+0
+   \       0x58   0xF8AD 0x000E      STRH     R0,[SP, #+14]
     136            usart1_init_struct.USART_Parity = USART_Parity_No;
-   \       0x5A   0x2000             MOVS     R0,#+0
-   \       0x5C   0xF8AD 0x0010      STRH     R0,[SP, #+16]
+   \       0x5C   0x2000             MOVS     R0,#+0
+   \       0x5E   0xF8AD 0x0010      STRH     R0,[SP, #+16]
     137            usart1_init_struct.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-   \       0x60   0x200C             MOVS     R0,#+12
-   \       0x62   0xF8AD 0x0012      STRH     R0,[SP, #+18]
+   \       0x62   0x200C             MOVS     R0,#+12
+   \       0x64   0xF8AD 0x0012      STRH     R0,[SP, #+18]
     138            usart1_init_struct.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-   \       0x66   0x2000             MOVS     R0,#+0
-   \       0x68   0xF8AD 0x0014      STRH     R0,[SP, #+20]
+   \       0x68   0x2000             MOVS     R0,#+0
+   \       0x6A   0xF8AD 0x0014      STRH     R0,[SP, #+20]
     139            USART_Init(USART1, &usart1_init_struct);
-   \       0x6C   0x....             LDR.N    R4,??DataTable13
-   \       0x6E   0xA902             ADD      R1,SP,#+8
-   \       0x70   0x0020             MOVS     R0,R4
-   \       0x72   0x.... 0x....      BL       USART_Init
+   \       0x6E   0x....             LDR.N    R4,??DataTable13
+   \       0x70   0xA902             ADD      R1,SP,#+8
+   \       0x72   0x0020             MOVS     R0,R4
+   \       0x74   0x.... 0x....      BL       USART_Init
     140            USART_Cmd(USART1, ENABLE);
-   \       0x76   0x2101             MOVS     R1,#+1
-   \       0x78   0x0020             MOVS     R0,R4
-   \       0x7A   0x.... 0x....      BL       USART_Cmd
+   \       0x78   0x2101             MOVS     R1,#+1
+   \       0x7A   0x0020             MOVS     R0,R4
+   \       0x7C   0x.... 0x....      BL       USART_Cmd
     141            USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
-   \       0x7E   0x2201             MOVS     R2,#+1
-   \       0x80   0xF240 0x5125      MOVW     R1,#+1317
-   \       0x84   0x0020             MOVS     R0,R4
-   \       0x86   0x.... 0x....      BL       USART_ITConfig
+   \       0x80   0x2201             MOVS     R2,#+1
+   \       0x82   0xF240 0x5125      MOVW     R1,#+1317
+   \       0x86   0x0020             MOVS     R0,R4
+   \       0x88   0x.... 0x....      BL       USART_ITConfig
     142          
     143            NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
-   \       0x8A   0x2025             MOVS     R0,#+37
-   \       0x8C   0xF88D 0x0004      STRB     R0,[SP, #+4]
+   \       0x8C   0x2025             MOVS     R0,#+37
+   \       0x8E   0xF88D 0x0004      STRB     R0,[SP, #+4]
     144            NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;
-   \       0x90   0x2001             MOVS     R0,#+1
-   \       0x92   0xF88D 0x0005      STRB     R0,[SP, #+5]
+   \       0x92   0x2001             MOVS     R0,#+1
+   \       0x94   0xF88D 0x0005      STRB     R0,[SP, #+5]
     145            NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;
-   \       0x96   0x2001             MOVS     R0,#+1
-   \       0x98   0xF88D 0x0006      STRB     R0,[SP, #+6]
+   \       0x98   0x2001             MOVS     R0,#+1
+   \       0x9A   0xF88D 0x0006      STRB     R0,[SP, #+6]
     146            NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-   \       0x9C   0x2001             MOVS     R0,#+1
-   \       0x9E   0xF88D 0x0007      STRB     R0,[SP, #+7]
+   \       0x9E   0x2001             MOVS     R0,#+1
+   \       0xA0   0xF88D 0x0007      STRB     R0,[SP, #+7]
     147            NVIC_Init(&NVIC_InitStructure);
-   \       0xA2   0xA801             ADD      R0,SP,#+4
-   \       0xA4   0x.... 0x....      BL       NVIC_Init
+   \       0xA4   0xA801             ADD      R0,SP,#+4
+   \       0xA6   0x.... 0x....      BL       NVIC_Init
     148          }
-   \       0xA8   0xB006             ADD      SP,SP,#+24
-   \       0xAA   0xBD10             POP      {R4,PC}
+   \       0xAA   0xB006             ADD      SP,SP,#+24
+   \       0xAC   0xBD10             POP      {R4,PC}
 
    \                                 In section .text, align 2, keep-with-next
     149          void USART2_Init(void)
@@ -580,173 +580,191 @@ Warning[Pa093]: implicit conversion from floating point to integer
     195          
 
    \                                 In section .bss, align 4
-    196          int rgb_count = 0;
-   \                     rgb_count:
+    196          int address = 0;
+   \                     address:
    \        0x0                      DS8 4
 
    \                                 In section .bss, align 4
-    197          unsigned char  RGB_array[4]; 
+    197          int auto_mode =  0 ;
+   \                     auto_mode:
+   \        0x0                      DS8 4
+    198          
+
+   \                                 In section .bss, align 4
+    199          unsigned char  RGB_array[4]; 
    \                     RGB_array:
    \        0x0                      DS8 4
 
    \                                 In section .bss, align 2
-    198          uint16_t test00 ;
+    200          uint16_t test00 ;
    \                     test00:
    \        0x0                      DS8 2
+    201          
 
    \                                 In section .text, align 2, keep-with-next
-    199          void USART2_IRQHandler(void) {
+    202          void USART2_IRQHandler(void) {
    \                     USART2_IRQHandler: (+1)
    \        0x0   0xB570             PUSH     {R4-R6,LR}
-    200            uint16_t word;
-    201          
-    202                 if(USART_GetITStatus(USART2,USART_IT_RXNE)!=RESET){
+    203            uint16_t word;
+    204            
+    205                 if(USART_GetITStatus(USART2,USART_IT_RXNE)!=RESET){
    \        0x2   0x....             LDR.N    R4,??DataTable13_1
    \        0x4   0xF240 0x5525      MOVW     R5,#+1317
    \        0x8   0x0029             MOVS     R1,R5
    \        0xA   0x0020             MOVS     R0,R4
    \        0xC   0x.... 0x....      BL       USART_GetITStatus
    \       0x10   0x2800             CMP      R0,#+0
-   \       0x12   0xD01A             BEQ.N    ??USART2_IRQHandler_0
-    203                    word =  USART_ReceiveData(USART2);
+   \       0x12   0xD021             BEQ.N    ??USART2_IRQHandler_0
+    206                    word =  USART_ReceiveData(USART2);
    \       0x14   0x0020             MOVS     R0,R4
    \       0x16   0x.... 0x....      BL       USART_ReceiveData
    \       0x1A   0x0006             MOVS     R6,R0
-    204                    USART_SendData(USART1, word);
+    207                    USART_SendData(USART1, word);
    \       0x1C   0x0031             MOVS     R1,R6
    \       0x1E   0xB289             UXTH     R1,R1
    \       0x20   0x....             LDR.N    R0,??DataTable13
    \       0x22   0x.... 0x....      BL       USART_SendData
-    205                    test00 = word;
+    208                    test00 = word;
    \       0x26   0x....             LDR.N    R0,??DataTable13_7
    \       0x28   0x8006             STRH     R6,[R0, #+0]
-    206                    RGB_array[rgb_count] =  (unsigned char) word;
+    209                    
+    210                   
+    211                     
+    212                    if(address <4){
    \       0x2A   0x....             LDR.N    R0,??DataTable13_8
-   \       0x2C   0x....             LDR.N    R1,??DataTable13_9
-   \       0x2E   0x6802             LDR      R2,[R0, #+0]
-   \       0x30   0x548E             STRB     R6,[R1, R2]
-    207                    
-    208                    rgb_count = (rgb_count+1) % 4;
-   \       0x32   0x6801             LDR      R1,[R0, #+0]
-   \       0x34   0x1C49             ADDS     R1,R1,#+1
-   \       0x36   0x2204             MOVS     R2,#+4
-   \       0x38   0xFB91 0xF3F2      SDIV     R3,R1,R2
-   \       0x3C   0xFB02 0x1113      MLS      R1,R2,R3,R1
-   \       0x40   0x6001             STR      R1,[R0, #+0]
-    209                    USART_ClearITPendingBit(USART2, USART_IT_RXNE);
-   \       0x42   0x0029             MOVS     R1,R5
-   \       0x44   0x0020             MOVS     R0,R4
-   \       0x46   0x.... 0x....      BL       USART_ClearITPendingBit
-    210                
-    211                 }
-    212          }
+   \       0x2C   0x6801             LDR      R1,[R0, #+0]
+   \       0x2E   0x2904             CMP      R1,#+4
+   \       0x30   0xDA03             BGE.N    ??USART2_IRQHandler_1
+    213                          RGB_array[address] =  (unsigned char) word;
+   \       0x32   0x....             LDR.N    R1,??DataTable13_9
+   \       0x34   0x6802             LDR      R2,[R0, #+0]
+   \       0x36   0x548E             STRB     R6,[R1, R2]
+   \       0x38   0xE002             B.N      ??USART2_IRQHandler_2
+    214                    }
+    215                    else{
+    216                      auto_mode = word;
+   \                     ??USART2_IRQHandler_1: (+1)
+   \       0x3A   0xB2B6             UXTH     R6,R6
+   \       0x3C   0x....             LDR.N    R1,??DataTable13_10
+   \       0x3E   0x600E             STR      R6,[R1, #+0]
+    217                    }
+    218                    address = (address + 1)%5;
+   \                     ??USART2_IRQHandler_2: (+1)
+   \       0x40   0x6801             LDR      R1,[R0, #+0]
+   \       0x42   0x1C49             ADDS     R1,R1,#+1
+   \       0x44   0x2205             MOVS     R2,#+5
+   \       0x46   0xFB91 0xF3F2      SDIV     R3,R1,R2
+   \       0x4A   0xFB02 0x1113      MLS      R1,R2,R3,R1
+   \       0x4E   0x6001             STR      R1,[R0, #+0]
+    219                    USART_ClearITPendingBit(USART2, USART_IT_RXNE);
+   \       0x50   0x0029             MOVS     R1,R5
+   \       0x52   0x0020             MOVS     R0,R4
+   \       0x54   0x.... 0x....      BL       USART_ClearITPendingBit
+    220                
+    221                 }
+    222          }
    \                     ??USART2_IRQHandler_0: (+1)
-   \       0x4A   0xBD70             POP      {R4-R6,PC}
-    213          
-
-   \                                 In section .data, align 4
-    214          float darkness = 1;
-   \                     darkness:
-   \        0x0   0x3F80'0000        DC32 0x3f80'0000
-    215          
+   \       0x58   0xBD70             POP      {R4-R6,PC}
+    223          
+    224          
 
    \                                 In section .text, align 2, keep-with-next
-    216          int scopeValue(int num){
-    217            if(num <0 ){
+    225          int scopeValue(int num){
+    226            if(num <0 ){
    \                     scopeValue: (+1)
    \        0x0   0x2800             CMP      R0,#+0
    \        0x2   0xD500             BPL.N    ??scopeValue_0
-    218              num = 0;
+    227              num = 0;
    \        0x4   0x2000             MOVS     R0,#+0
-    219            }
-    220            if(num>255){
+    228            }
+    229            if(num>255){
    \                     ??scopeValue_0: (+1)
    \        0x6   0xF5B0 0x7F80      CMP      R0,#+256
    \        0xA   0xDB00             BLT.N    ??scopeValue_1
-    221              num = 255;
+    230              num = 255;
    \        0xC   0x20FF             MOVS     R0,#+255
-    222            }
-    223            
-    224            return num;
+    231            }
+    232            
+    233            return num;
    \                     ??scopeValue_1: (+1)
    \        0xE   0x4770             BX       LR
-    225            
-    226          }
-    227          
+    234            
+    235          }
+    236          
 
    \                                 In section .text, align 2, keep-with-next
-    228          void turnLED(){
+    237          void turnLED(){
    \                     turnLED: (+1)
    \        0x0   0xB5F8             PUSH     {R3-R7,LR}
-    229                unsigned char  temp_array[4]; 
-    230                for(int i= 0;i<4;i++){
+    238                unsigned char  temp_array[4]; 
+    239                for(int i= 0;i<4;i++){
    \        0x2   0x2000             MOVS     R0,#+0
    \        0x4   0xE004             B.N      ??turnLED_0
-    231                  temp_array[i] = RGB_array[i];
+    240                  temp_array[i] = RGB_array[i];
    \                     ??turnLED_1: (+1)
    \        0x6   0x....             LDR.N    R1,??DataTable13_9
    \        0x8   0x5C09             LDRB     R1,[R1, R0]
    \        0xA   0x466A             MOV      R2,SP
    \        0xC   0x5411             STRB     R1,[R2, R0]
-    232                }
+    241                }
    \        0xE   0x1C40             ADDS     R0,R0,#+1
    \                     ??turnLED_0: (+1)
    \       0x10   0x2804             CMP      R0,#+4
    \       0x12   0xDBF8             BLT.N    ??turnLED_1
-    233               
-    234                if( temp_array[3] == 0){
+    242               
+    243                if( temp_array[3] == 0){
    \       0x14   0x466C             MOV      R4,SP
    \       0x16   0x78E0             LDRB     R0,[R4, #+3]
    \       0x18   0x2800             CMP      R0,#+0
    \       0x1A   0xD119             BNE.N    ??turnLED_2
-    235                  for(int i=0;i<NUM_LEDS;i++){    
+    244                  for(int i=0;i<NUM_LEDS;i++){    
    \       0x1C   0x2000             MOVS     R0,#+0
    \       0x1E   0xE010             B.N      ??turnLED_3
-    236                        leds[i].r = 255 ;
+    245                        leds[i].r = 255 ;
    \                     ??turnLED_4: (+1)
    \       0x20   0x22FF             MOVS     R2,#+255
-   \       0x22   0x....             LDR.N    R1,??DataTable13_10
+   \       0x22   0x....             LDR.N    R1,??DataTable13_11
    \       0x24   0x2303             MOVS     R3,#+3
    \       0x26   0xFB03 0xF300      MUL      R3,R3,R0
    \       0x2A   0x54CA             STRB     R2,[R1, R3]
-    237                        leds[i].g =255 ;
+    246                        leds[i].g =255 ;
    \       0x2C   0x2303             MOVS     R3,#+3
    \       0x2E   0xFB03 0xF300      MUL      R3,R3,R0
    \       0x32   0x440B             ADD      R3,R1,R3
    \       0x34   0x705A             STRB     R2,[R3, #+1]
-    238                        leds[i].b = 255 ;
+    247                        leds[i].b = 255 ;
    \       0x36   0x2303             MOVS     R3,#+3
    \       0x38   0xFB03 0xF300      MUL      R3,R3,R0
    \       0x3C   0x4419             ADD      R1,R1,R3
    \       0x3E   0x708A             STRB     R2,[R1, #+2]
-    239                  }
+    248                  }
    \       0x40   0x1C40             ADDS     R0,R0,#+1
    \                     ??turnLED_3: (+1)
    \       0x42   0x280C             CMP      R0,#+12
    \       0x44   0xDBEC             BLT.N    ??turnLED_4
-    240                   ws2812b_SendRGB(leds, NUM_LEDS);
+    249                   ws2812b_SendRGB(leds, NUM_LEDS);
    \       0x46   0x210C             MOVS     R1,#+12
-   \       0x48   0x....             LDR.N    R0,??DataTable13_10
+   \       0x48   0x....             LDR.N    R0,??DataTable13_11
    \       0x4A   0x.... 0x....      BL       ws2812b_SendRGB
-    241          
-    242                   return;
+    250          
+    251                   return;
    \       0x4E   0xE031             B.N      ??turnLED_5
-    243                }
-    244               
-    245              while (!ws2812b_IsReady())  ;  // wait
+    252                }
+    253               
+    254             while (!ws2812b_IsReady())  ;  // wait
    \                     ??turnLED_2: (+1)
    \       0x50   0x.... 0x....      BL       ws2812b_IsReady
    \       0x54   0x2800             CMP      R0,#+0
    \       0x56   0xD0FB             BEQ.N    ??turnLED_2
-    246                    int brightness = 255- temp_array[3];
+    255                    int brightness = 255 - temp_array[3];
    \       0x58   0x78E5             LDRB     R5,[R4, #+3]
    \       0x5A   0xF1D5 0x05FF      RSBS     R5,R5,#+255
-    247                    for(int i=0;i<NUM_LEDS;i++){    
+    256                    for(int i=0;i<NUM_LEDS;i++){    
    \       0x5E   0x2600             MOVS     R6,#+0
    \       0x60   0xE022             B.N      ??turnLED_6
-    248                      leds[i].r = scopeValue(((255 - temp_array[0]) ) +brightness) ;
+    257                      leds[i].r = scopeValue(((255 - temp_array[0]) + brightness )) ;
    \                     ??turnLED_7: (+1)
-   \       0x62   0x....             LDR.N    R7,??DataTable13_10
+   \       0x62   0x....             LDR.N    R7,??DataTable13_11
    \       0x64   0xF89D 0x0000      LDRB     R0,[SP, #+0]
    \       0x68   0xF1D0 0x00FF      RSBS     R0,R0,#+255
    \       0x6C   0x1828             ADDS     R0,R5,R0
@@ -754,7 +772,7 @@ Warning[Pa093]: implicit conversion from floating point to integer
    \       0x72   0x2103             MOVS     R1,#+3
    \       0x74   0xFB01 0xF106      MUL      R1,R1,R6
    \       0x78   0x5478             STRB     R0,[R7, R1]
-    249                      leds[i].g =scopeValue( ((255 - temp_array[1])) + brightness); 
+    258                      leds[i].g =scopeValue( ((255 - temp_array[1])+ brightness ) ) ;
    \       0x7A   0x7860             LDRB     R0,[R4, #+1]
    \       0x7C   0xF1D0 0x00FF      RSBS     R0,R0,#+255
    \       0x80   0x1828             ADDS     R0,R5,R0
@@ -763,7 +781,7 @@ Warning[Pa093]: implicit conversion from floating point to integer
    \       0x88   0xFB01 0xF106      MUL      R1,R1,R6
    \       0x8C   0x4439             ADD      R1,R7,R1
    \       0x8E   0x7048             STRB     R0,[R1, #+1]
-    250                      leds[i].b = scopeValue(((255 - temp_array[2]) ) + brightness);
+    259                      leds[i].b = scopeValue(((255 - temp_array[2]) + brightness ) );
    \       0x90   0x78A0             LDRB     R0,[R4, #+2]
    \       0x92   0xF1D0 0x00FF      RSBS     R0,R0,#+255
    \       0x96   0x1828             ADDS     R0,R5,R0
@@ -772,176 +790,233 @@ Warning[Pa093]: implicit conversion from floating point to integer
    \       0x9E   0xFB01 0xF106      MUL      R1,R1,R6
    \       0xA2   0x4439             ADD      R1,R7,R1
    \       0xA4   0x7088             STRB     R0,[R1, #+2]
-    251                    }
+    260                    }
    \       0xA6   0x1C76             ADDS     R6,R6,#+1
    \                     ??turnLED_6: (+1)
    \       0xA8   0x2E0C             CMP      R6,#+12
    \       0xAA   0xDBDA             BLT.N    ??turnLED_7
-    252                  
-    253               
-    254              ws2812b_SendRGB(leds, NUM_LEDS);
+    261                  
+    262               
+    263              ws2812b_SendRGB(leds, NUM_LEDS);
    \       0xAC   0x210C             MOVS     R1,#+12
-   \       0xAE   0x....             LDR.N    R0,??DataTable13_10
+   \       0xAE   0x....             LDR.N    R0,??DataTable13_11
    \       0xB0   0x.... 0x....      BL       ws2812b_SendRGB
-    255          }
+    264          }
    \                     ??turnLED_5: (+1)
    \       0xB4   0xBDF1             POP      {R0,R4-R7,PC}
-    256                  
-    257          
-    258          
-    259          
-    260          
-    261          
+    265                  
+    266          
+    267          
+    268          
+    269          
+    270          
 
    \                                 In section .text, align 2, keep-with-next
-    262          void Delay(void) {
-    263          int i;
-    264          
-    265          for (i = 0; i < 20000000; i++) {}
+    271          void Delay(void) {
+    272          int i;
+    273          
+    274          for (i = 0; i < 20000000; i++) {}
    \                     Delay: (+1)
    \        0x0   0x2000             MOVS     R0,#+0
    \        0x2   0xE000             B.N      ??Delay_0
    \                     ??Delay_1: (+1)
    \        0x4   0x1C40             ADDS     R0,R0,#+1
    \                     ??Delay_0: (+1)
-   \        0x6   0x....             LDR.N    R1,??DataTable13_11
+   \        0x6   0x....             LDR.N    R1,??DataTable13_12
    \        0x8   0x4288             CMP      R0,R1
    \        0xA   0xDBFB             BLT.N    ??Delay_1
-    266          }
+    275          }
    \        0xC   0x4770             BX       LR
-    267          
+    276          
 
    \                                 In section .bss, align 4
-    268          int flag_a= 0;
+    277          int flag_a= 0;
    \                     flag_a:
    \        0x0                      DS8 4
 
    \                                 In section .bss, align 4
-    269          int flag_b=0;
+    278          int flag_b=0;
    \                     flag_b:
    \        0x0                      DS8 4
 
    \                                 In section .text, align 2, keep-with-next
-    270          int main() {
+    279          int main() {
    \                     main: (+1)
-   \        0x0   0xB53E             PUSH     {R1-R5,LR}
-    271             ws2812b_Init();
+   \        0x0   0xB57C             PUSH     {R2-R6,LR}
+    280             ws2812b_Init();
    \        0x2   0x.... 0x....      BL       ws2812b_Init
-    272              SystemInit();
+    281              SystemInit();
    \        0x6   0x.... 0x....      BL       SystemInit
-    273             ws2812b_Init();
+    282             ws2812b_Init();
    \        0xA   0x.... 0x....      BL       ws2812b_Init
-    274             set_ENABLE();
+    283             set_ENABLE();
    \        0xE   0x.... 0x....      BL       set_ENABLE
-    275              set_PC1();
+    284              set_PC1();
    \       0x12   0x.... 0x....      BL       set_PC1
-    276              set_ADC();
+    285              set_ADC();
    \       0x16   0x.... 0x....      BL       set_ADC
-    277              set_NVIC();
+    286              set_NVIC();
    \       0x1A   0x.... 0x....      BL       set_NVIC
-    278             ADC_start();
+    287             ADC_start();
    \       0x1E   0x.... 0x....      BL       ADC_start
-    279             LCD_Init();
+    288             LCD_Init();
    \       0x22   0x.... 0x....      BL       LCD_Init
-    280             LCD_Clear(WHITE);   
+    289             LCD_Clear(WHITE);   
    \       0x26   0xF64F 0x74FF      MOVW     R4,#+65535
    \       0x2A   0x0020             MOVS     R0,R4
    \       0x2C   0x.... 0x....      BL       LCD_Clear
-    281            //USART1_Init();
-    282              USART2_Init();
+    290            //USART1_Init();
+    291              USART2_Init();
    \       0x30   0x.... 0x....      BL       USART2_Init
-   \       0x34   0xE003             B.N      ??main_0
-    283          
-    284              while (1) {
-    285            
-    286                  //
-    287                  // Fill leds buffer
-    288                  //
-    289                
-    290                     LCD_ShowNum(200, 1, test00, 4, BLACK, WHITE);
-    291                      LCD_ShowNum(200, 30, RGB_array[0], 4,BLACK, WHITE);
-    292                      LCD_ShowNum(200, 60, RGB_array[1],4, BLACK, WHITE);
-    293                      LCD_ShowNum(200, 90, RGB_array[2],4, BLACK, WHITE);
-    294          
-    295                     turnLED();
-    296                    
-    297                     
-    298                     
-    299                     if (jodo <500){
-    300                       darkness = 1;
+   \       0x34   0xE001             B.N      ??main_0
+    292          
+    293              while (1) {
+    294            
+    295                  //
+    296                  // Fill leds buffer
+    297                  //
+    298                
+    299                
+    300                           LCD_ShowNum(200, 1, RGB_array[3], 4, BLACK, WHITE);
+    301                      LCD_ShowNum(200, 30, RGB_array[0], 4,BLACK, WHITE);
+    302                      LCD_ShowNum(200, 60, RGB_array[1],4, BLACK, WHITE);
+    303                      LCD_ShowNum(200, 90, RGB_array[2],4, BLACK, WHITE);
+    304                                  LCD_ShowNum(200, 120, jodo,4, BLACK, WHITE);
+    305          LCD_ShowNum(200, 150, auto_mode, 4, BLACK, WHITE);
+    306                  if(auto_mode==0)
+    307                  {
+    308                   turnLED();
    \                     ??main_1: (+1)
-   \       0x36   0xF05F 0x507E      MOVS     R0,#+1065353216
-   \       0x3A   0x....             LDR.N    R1,??DataTable13_12
-   \       0x3C   0x6008             STR      R0,[R1, #+0]
-    301                       
-    302                     }else if (jodo<900){
+   \       0x36   0x.... 0x....      BL       turnLED
+    309            
+    310                  
+    311              //     ws2812b_SendRGB(leds, NUM_LEDS);
+    312                  }
    \                     ??main_0: (+1)
-   \       0x3E   0x0020             MOVS     R0,R4
-   \       0x40   0x9001             STR      R0,[SP, #+4]
-   \       0x42   0x2000             MOVS     R0,#+0
-   \       0x44   0x9000             STR      R0,[SP, #+0]
-   \       0x46   0x2304             MOVS     R3,#+4
-   \       0x48   0x....             LDR.N    R0,??DataTable13_7
-   \       0x4A   0x8802             LDRH     R2,[R0, #+0]
-   \       0x4C   0x2101             MOVS     R1,#+1
-   \       0x4E   0x20C8             MOVS     R0,#+200
-   \       0x50   0x.... 0x....      BL       LCD_ShowNum
-   \       0x54   0x....             LDR.N    R5,??DataTable13_9
-   \       0x56   0x0020             MOVS     R0,R4
-   \       0x58   0x9001             STR      R0,[SP, #+4]
-   \       0x5A   0x2000             MOVS     R0,#+0
-   \       0x5C   0x9000             STR      R0,[SP, #+0]
-   \       0x5E   0x2304             MOVS     R3,#+4
-   \       0x60   0x782A             LDRB     R2,[R5, #+0]
-   \       0x62   0x211E             MOVS     R1,#+30
-   \       0x64   0x20C8             MOVS     R0,#+200
-   \       0x66   0x.... 0x....      BL       LCD_ShowNum
-   \       0x6A   0x0020             MOVS     R0,R4
-   \       0x6C   0x9001             STR      R0,[SP, #+4]
-   \       0x6E   0x2000             MOVS     R0,#+0
-   \       0x70   0x9000             STR      R0,[SP, #+0]
-   \       0x72   0x2304             MOVS     R3,#+4
-   \       0x74   0x786A             LDRB     R2,[R5, #+1]
-   \       0x76   0x213C             MOVS     R1,#+60
-   \       0x78   0x20C8             MOVS     R0,#+200
-   \       0x7A   0x.... 0x....      BL       LCD_ShowNum
-   \       0x7E   0x0020             MOVS     R0,R4
-   \       0x80   0x9001             STR      R0,[SP, #+4]
-   \       0x82   0x2000             MOVS     R0,#+0
-   \       0x84   0x9000             STR      R0,[SP, #+0]
-   \       0x86   0x2304             MOVS     R3,#+4
-   \       0x88   0x78AA             LDRB     R2,[R5, #+2]
-   \       0x8A   0x215A             MOVS     R1,#+90
-   \       0x8C   0x20C8             MOVS     R0,#+200
-   \       0x8E   0x.... 0x....      BL       LCD_ShowNum
-   \       0x92   0x.... 0x....      BL       turnLED
-   \       0x96   0x....             LDR.N    R0,??DataTable13_4
-   \       0x98   0x8801             LDRH     R1,[R0, #+0]
-   \       0x9A   0xF5B1 0x7FFA      CMP      R1,#+500
-   \       0x9E   0xDBCA             BLT.N    ??main_1
-   \       0xA0   0x8800             LDRH     R0,[R0, #+0]
-   \       0xA2   0xF5B0 0x7F61      CMP      R0,#+900
-   \       0xA6   0xDA04             BGE.N    ??main_2
-    303                       darkness = 0.5;
-   \       0xA8   0xF05F 0x507C      MOVS     R0,#+1056964608
-   \       0xAC   0x....             LDR.N    R1,??DataTable13_12
-   \       0xAE   0x6008             STR      R0,[R1, #+0]
-   \       0xB0   0xE7C5             B.N      ??main_0
-    304                       
-    305                     }else{
-    306                       darkness = 0.1;
+   \       0x3A   0x....             LDR.N    R5,??DataTable13_9
+   \       0x3C   0x0020             MOVS     R0,R4
+   \       0x3E   0x9001             STR      R0,[SP, #+4]
+   \       0x40   0x2000             MOVS     R0,#+0
+   \       0x42   0x9000             STR      R0,[SP, #+0]
+   \       0x44   0x2304             MOVS     R3,#+4
+   \       0x46   0x78EA             LDRB     R2,[R5, #+3]
+   \       0x48   0x2101             MOVS     R1,#+1
+   \       0x4A   0x20C8             MOVS     R0,#+200
+   \       0x4C   0x.... 0x....      BL       LCD_ShowNum
+   \       0x50   0x0020             MOVS     R0,R4
+   \       0x52   0x9001             STR      R0,[SP, #+4]
+   \       0x54   0x2000             MOVS     R0,#+0
+   \       0x56   0x9000             STR      R0,[SP, #+0]
+   \       0x58   0x2304             MOVS     R3,#+4
+   \       0x5A   0x782A             LDRB     R2,[R5, #+0]
+   \       0x5C   0x211E             MOVS     R1,#+30
+   \       0x5E   0x20C8             MOVS     R0,#+200
+   \       0x60   0x.... 0x....      BL       LCD_ShowNum
+   \       0x64   0x0020             MOVS     R0,R4
+   \       0x66   0x9001             STR      R0,[SP, #+4]
+   \       0x68   0x2000             MOVS     R0,#+0
+   \       0x6A   0x9000             STR      R0,[SP, #+0]
+   \       0x6C   0x2304             MOVS     R3,#+4
+   \       0x6E   0x786A             LDRB     R2,[R5, #+1]
+   \       0x70   0x213C             MOVS     R1,#+60
+   \       0x72   0x20C8             MOVS     R0,#+200
+   \       0x74   0x.... 0x....      BL       LCD_ShowNum
+   \       0x78   0x0020             MOVS     R0,R4
+   \       0x7A   0x9001             STR      R0,[SP, #+4]
+   \       0x7C   0x2000             MOVS     R0,#+0
+   \       0x7E   0x9000             STR      R0,[SP, #+0]
+   \       0x80   0x2304             MOVS     R3,#+4
+   \       0x82   0x78AA             LDRB     R2,[R5, #+2]
+   \       0x84   0x215A             MOVS     R1,#+90
+   \       0x86   0x20C8             MOVS     R0,#+200
+   \       0x88   0x.... 0x....      BL       LCD_ShowNum
+   \       0x8C   0x....             LDR.N    R5,??DataTable13_4
+   \       0x8E   0x0020             MOVS     R0,R4
+   \       0x90   0x9001             STR      R0,[SP, #+4]
+   \       0x92   0x2000             MOVS     R0,#+0
+   \       0x94   0x9000             STR      R0,[SP, #+0]
+   \       0x96   0x2304             MOVS     R3,#+4
+   \       0x98   0x882A             LDRH     R2,[R5, #+0]
+   \       0x9A   0x2178             MOVS     R1,#+120
+   \       0x9C   0x20C8             MOVS     R0,#+200
+   \       0x9E   0x.... 0x....      BL       LCD_ShowNum
+   \       0xA2   0x....             LDR.N    R6,??DataTable13_10
+   \       0xA4   0x0020             MOVS     R0,R4
+   \       0xA6   0x9001             STR      R0,[SP, #+4]
+   \       0xA8   0x2000             MOVS     R0,#+0
+   \       0xAA   0x9000             STR      R0,[SP, #+0]
+   \       0xAC   0x2304             MOVS     R3,#+4
+   \       0xAE   0x6832             LDR      R2,[R6, #+0]
+   \       0xB0   0x2196             MOVS     R1,#+150
+   \       0xB2   0x20C8             MOVS     R0,#+200
+   \       0xB4   0x.... 0x....      BL       LCD_ShowNum
+   \       0xB8   0x6830             LDR      R0,[R6, #+0]
+   \       0xBA   0x2800             CMP      R0,#+0
+   \       0xBC   0xD0BB             BEQ.N    ??main_1
+    313                  else{
+    314                     int darkness = 0;
+   \       0xBE   0x2000             MOVS     R0,#+0
+    315                     
+    316                     if (jodo <50){
+   \       0xC0   0x8828             LDRH     R0,[R5, #+0]
+   \       0xC2   0x2832             CMP      R0,#+50
+   \       0xC4   0xDA01             BGE.N    ??main_2
+    317                       darkness = 0;
+   \       0xC6   0x2000             MOVS     R0,#+0
+   \       0xC8   0xE005             B.N      ??main_3
+    318                       
+    319                     }else if (jodo<120){
    \                     ??main_2: (+1)
-   \       0xB2   0x....             LDR.N    R0,??DataTable13_13
-   \       0xB4   0x....             LDR.N    R1,??DataTable13_12
-   \       0xB6   0x6008             STR      R0,[R1, #+0]
-   \       0xB8   0xE7C1             B.N      ??main_0
-    307                     }
-    308                     
-    309                     
-    310              
-    311              
-    312              }
-    313          }
+   \       0xCA   0x8828             LDRH     R0,[R5, #+0]
+   \       0xCC   0x2878             CMP      R0,#+120
+   \       0xCE   0xDA01             BGE.N    ??main_4
+    320                       darkness = 90;
+   \       0xD0   0x205A             MOVS     R0,#+90
+   \       0xD2   0xE000             B.N      ??main_3
+    321                       
+    322                     }else{
+    323                       darkness = 190;
+   \                     ??main_4: (+1)
+   \       0xD4   0x20BE             MOVS     R0,#+190
+    324                     }
+    325                     
+    326                      for(int i=0;i<NUM_LEDS;i++){    
+   \                     ??main_3: (+1)
+   \       0xD6   0x2100             MOVS     R1,#+0
+   \       0xD8   0xE00F             B.N      ??main_5
+    327                        leds[i].r =  darkness ;
+   \                     ??main_6: (+1)
+   \       0xDA   0x....             LDR.N    R2,??DataTable13_11
+   \       0xDC   0x2303             MOVS     R3,#+3
+   \       0xDE   0xFB03 0xF301      MUL      R3,R3,R1
+   \       0xE2   0x54D0             STRB     R0,[R2, R3]
+    328                        leds[i].g =darkness ;
+   \       0xE4   0x2303             MOVS     R3,#+3
+   \       0xE6   0xFB03 0xF301      MUL      R3,R3,R1
+   \       0xEA   0x4413             ADD      R3,R2,R3
+   \       0xEC   0x7058             STRB     R0,[R3, #+1]
+    329                        leds[i].b = darkness ;
+   \       0xEE   0x2303             MOVS     R3,#+3
+   \       0xF0   0xFB03 0xF301      MUL      R3,R3,R1
+   \       0xF4   0x441A             ADD      R2,R2,R3
+   \       0xF6   0x7090             STRB     R0,[R2, #+2]
+    330                     }
+   \       0xF8   0x1C49             ADDS     R1,R1,#+1
+   \                     ??main_5: (+1)
+   \       0xFA   0x290C             CMP      R1,#+12
+   \       0xFC   0xDBED             BLT.N    ??main_6
+    331                         ws2812b_SendRGB(leds, NUM_LEDS);
+   \       0xFE   0x210C             MOVS     R1,#+12
+   \      0x100   0x....             LDR.N    R0,??DataTable13_11
+   \      0x102   0x.... 0x....      BL       ws2812b_SendRGB
+   \      0x106   0xE798             B.N      ??main_0
+    332          
+    333                  }
+    334                     
+    335              
+    336              
+    337              }
+    338          }
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable13:
@@ -977,7 +1052,7 @@ Warning[Pa093]: implicit conversion from floating point to integer
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable13_8:
-   \        0x0   0x....'....        DC32     rgb_count
+   \        0x0   0x....'....        DC32     address
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable13_9:
@@ -985,20 +1060,16 @@ Warning[Pa093]: implicit conversion from floating point to integer
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable13_10:
-   \        0x0   0x....'....        DC32     leds
+   \        0x0   0x....'....        DC32     auto_mode
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable13_11:
-   \        0x0   0x0131'2D00        DC32     0x1312d00
+   \        0x0   0x....'....        DC32     leds
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable13_12:
-   \        0x0   0x....'....        DC32     darkness
-
-   \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable13_13:
-   \        0x0   0x3DCC'CCCD        DC32     0x3dcccccd
-    314          
+   \        0x0   0x0131'2D00        DC32     0x1312d00
+    339          
 
    Maximum stack usage in bytes:
 
@@ -1053,6 +1124,7 @@ Warning[Pa093]: implicit conversion from floating point to integer
         24   -> set_PC1
         24   -> turnLED
         24   -> ws2812b_Init
+        24   -> ws2812b_SendRGB
        0   scopeValue
       16   send_com
         16   -> USART_GetFlagStatus
@@ -1087,7 +1159,6 @@ Warning[Pa093]: implicit conversion from floating point to integer
        4  ??DataTable13_10
        4  ??DataTable13_11
        4  ??DataTable13_12
-       4  ??DataTable13_13
        4  ??DataTable13_2
        4  ??DataTable13_3
        4  ??DataTable13_4
@@ -1101,16 +1172,16 @@ Warning[Pa093]: implicit conversion from floating point to integer
       14  Delay
        4  RGB_array
       46  USART1_IRQHandler
-     172  USART1_Init
-      76  USART2_IRQHandler
+     174  USART1_Init
+      90  USART2_IRQHandler
      166  USART2_Init
-       4  darkness
+       4  address
+       4  auto_mode
        4  flag_a
        4  flag_b
        2  jodo
       36  leds
-     186  main
-       4  rgb_count
+     264  main
       16  scopeValue
       42  send_com
       42  send_phone
@@ -1122,11 +1193,10 @@ Warning[Pa093]: implicit conversion from floating point to integer
      182  turnLED
 
  
-    56 bytes in section .bss
-     4 bytes in section .data
- 1'292 bytes in section .text
+    60 bytes in section .bss
+ 1'382 bytes in section .text
  
- 1'292 bytes of CODE memory
+ 1'382 bytes of CODE memory
     60 bytes of DATA memory
 
 Errors: none

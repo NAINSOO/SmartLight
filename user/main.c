@@ -193,25 +193,34 @@ uint16_t word;
     }
 }
 
-int rgb_count = 0;
+int address = 0;
+int auto_mode =  0 ;
+
 unsigned char  RGB_array[4]; 
 uint16_t test00 ;
+
 void USART2_IRQHandler(void) {
   uint16_t word;
-
+  
        if(USART_GetITStatus(USART2,USART_IT_RXNE)!=RESET){
           word =  USART_ReceiveData(USART2);
           USART_SendData(USART1, word);
           test00 = word;
-          RGB_array[rgb_count] =  (unsigned char) word;
           
-          rgb_count = (rgb_count+1) % 4;
+         
+           
+          if(address <4){
+                RGB_array[address] =  (unsigned char) word;
+          }
+          else{
+            auto_mode = word;
+          }
+          address = (address + 1)%5;
           USART_ClearITPendingBit(USART2, USART_IT_RXNE);
       
        }
 }
 
-int darkness = 0;
 
 int scopeValue(int num){
   if(num <0 ){
@@ -242,12 +251,12 @@ void turnLED(){
          return;
       }
      
-    while (!ws2812b_IsReady())  ;  // wait
-          int brightness = 255- temp_array[3];
+   while (!ws2812b_IsReady())  ;  // wait
+          int brightness = 255 - temp_array[3];
           for(int i=0;i<NUM_LEDS;i++){    
-            leds[i].r = scopeValue(((255 - temp_array[0]) ) +brightness+ darkness)  ;
-            leds[i].g =scopeValue( ((255 - temp_array[1])) + brightness+ darkness); 
-            leds[i].b = scopeValue(((255 - temp_array[2]) ) + brightness+ darkness);
+            leds[i].r = scopeValue(((255 - temp_array[0]) + brightness )) ;
+            leds[i].g =scopeValue( ((255 - temp_array[1])+ brightness ) ) ;
+            leds[i].b = scopeValue(((255 - temp_array[2]) + brightness ) );
           }
         
      
@@ -287,25 +296,41 @@ int main() {
         // Fill leds buffer
         //
       
-           LCD_ShowNum(200, 1, test00, 4, BLACK, WHITE);
+      
+                 LCD_ShowNum(200, 1, RGB_array[3], 4, BLACK, WHITE);
             LCD_ShowNum(200, 30, RGB_array[0], 4,BLACK, WHITE);
             LCD_ShowNum(200, 60, RGB_array[1],4, BLACK, WHITE);
             LCD_ShowNum(200, 90, RGB_array[2],4, BLACK, WHITE);
-
-           turnLED();
-          
+                        LCD_ShowNum(200, 120, jodo,4, BLACK, WHITE);
+LCD_ShowNum(200, 150, auto_mode, 4, BLACK, WHITE);
+        if(auto_mode==0)
+        {
+         turnLED();
+  
+        
+    //     ws2812b_SendRGB(leds, NUM_LEDS);
+        }
+        else{
+           int darkness = 0;
            
-           
-           if (jodo <500){
+           if (jodo <50){
              darkness = 0;
              
-           }else if (jodo<900){
+           }else if (jodo<120){
              darkness = 90;
              
            }else{
              darkness = 190;
            }
            
+            for(int i=0;i<NUM_LEDS;i++){    
+              leds[i].r =  darkness ;
+              leds[i].g =darkness ;
+              leds[i].b = darkness ;
+           }
+               ws2812b_SendRGB(leds, NUM_LEDS);
+
+        }
            
     
     
